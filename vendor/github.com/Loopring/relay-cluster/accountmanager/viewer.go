@@ -48,7 +48,7 @@ func GetBalanceWithSymbolResult(owner common.Address) (map[string]*big.Int, erro
 		for tokenAddr, balance := range accountBalances.Balances {
 			symbol := ""
 			if types.IsZeroAddress(tokenAddr) {
-				symbol = "ETH"
+				symbol = "EXP"
 			} else {
 				symbol = marketutil.AddressToAlias(tokenAddr.Hex())
 			}
@@ -71,7 +71,7 @@ func GetAllowanceWithSymbolResult(owner, spender common.Address) (map[string]*bi
 		for tokenAddr, allowances := range accountAllowances.Allowances {
 			symbol := ""
 			if types.IsZeroAddress(tokenAddr) {
-				symbol = "ETH"
+				symbol = "EXP"
 				res[symbol] = big.NewInt(int64(0))
 			} else {
 				symbol = marketutil.AddressToAlias(tokenAddr.Hex())
