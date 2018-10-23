@@ -19,7 +19,7 @@
 package motan
 
 import (
-	motan "github.com/Loopring/motan-go"
+	motan "github.com/expanse-org/motan-go"
 )
 
 func RunServer(options MotanServerOptions) {

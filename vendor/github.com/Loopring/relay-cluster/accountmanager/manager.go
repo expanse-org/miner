@@ -20,16 +20,16 @@ package accountmanager
 
 import (
 	"errors"
-	rcache "github.com/Loopring/relay-lib/cache"
-	"github.com/Loopring/relay-lib/eth/loopringaccessor"
-	"github.com/Loopring/relay-lib/eventemitter"
-	"github.com/Loopring/relay-lib/log"
+	rcache "github.com/expanse-org/relay-lib/cache"
+	"github.com/expanse-org/relay-lib/eth/loopringaccessor"
+	"github.com/expanse-org/relay-lib/eventemitter"
+	"github.com/expanse-org/relay-lib/log"
 
 	"fmt"
-	"github.com/Loopring/relay-cluster/util"
-	"github.com/Loopring/relay-lib/kafka"
-	"github.com/Loopring/relay-lib/marketutil"
-	"github.com/Loopring/relay-lib/types"
+	"github.com/expanse-org/relay-cluster/util"
+	"github.com/expanse-org/relay-lib/kafka"
+	"github.com/expanse-org/relay-lib/marketutil"
+	"github.com/expanse-org/relay-lib/types"
 	"github.com/ethereum/go-ethereum/common"
 	"math/big"
 )

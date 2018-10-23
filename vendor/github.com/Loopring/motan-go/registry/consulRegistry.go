@@ -3,7 +3,7 @@ package registry
 import (
 	"time"
 
-	motan "github.com/Loopring/motan-go/core"
+	motan "github.com/expanse-org/motan-go/core"
 )
 
 // ConsulRegistry TODO implement

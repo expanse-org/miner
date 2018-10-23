@@ -20,8 +20,8 @@ package cloudwatch
 
 import (
 	"fmt"
-	"github.com/Loopring/relay-lib/log"
-	"github.com/Loopring/relay-lib/utils"
+	"github.com/expanse-org/relay-lib/log"
+	"github.com/expanse-org/relay-lib/utils"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"

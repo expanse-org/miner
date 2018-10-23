@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"reflect"
 
-	motan "github.com/Loopring/motan-go/core"
-	"github.com/Loopring/motan-go/log"
-	"github.com/Loopring/relay-lib/cloudwatch"
+	motan "github.com/expanse-org/motan-go/core"
+	"github.com/expanse-org/motan-go/log"
+	"github.com/expanse-org/relay-lib/cloudwatch"
 	"time"
 )
 

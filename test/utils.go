@@ -20,19 +20,19 @@ package test
 
 //import (
 //	"fmt"
-//	"github.com/Loopring/relay/cache"
-//	"github.com/Loopring/relay/config"
-//	"github.com/Loopring/relay/crypto"
-//	"github.com/Loopring/relay/dao"
-//	"github.com/Loopring/relay/ethaccessor"
-//	"github.com/Loopring/relay/log"
-//	"github.com/Loopring/relay/market"
-//	"github.com/Loopring/relay/market/util"
-//	"github.com/Loopring/relay/marketcap"
-//	"github.com/Loopring/relay/ordermanager"
-//	"github.com/Loopring/relay/txmanager"
-//	"github.com/Loopring/relay/types"
-//	"github.com/Loopring/relay/usermanager"
+//	"github.com/expanse-org/relay/cache"
+//	"github.com/expanse-org/relay/config"
+//	"github.com/expanse-org/relay/crypto"
+//	"github.com/expanse-org/relay/dao"
+//	"github.com/expanse-org/relay/ethaccessor"
+//	"github.com/expanse-org/relay/log"
+//	"github.com/expanse-org/relay/market"
+//	"github.com/expanse-org/relay/market/util"
+//	"github.com/expanse-org/relay/marketcap"
+//	"github.com/expanse-org/relay/ordermanager"
+//	"github.com/expanse-org/relay/txmanager"
+//	"github.com/expanse-org/relay/types"
+//	"github.com/expanse-org/relay/usermanager"
 //	"github.com/ethereum/go-ethereum/accounts"
 //	"github.com/ethereum/go-ethereum/accounts/abi"
 //	"github.com/ethereum/go-ethereum/accounts/keystore"
@@ -75,7 +75,7 @@ package test
 //)
 //
 //func init() {
-//	Path = strings.TrimSuffix(os.Getenv("GOPATH"), "/") + "/src/github.com/Loopring/relay/config/" + DebugFile
+//	Path = strings.TrimSuffix(os.Getenv("GOPATH"), "/") + "/src/github.com/expanse-org/relay/config/" + DebugFile
 //	cfg = loadConfig()
 //	rds = GenerateDaoService()
 //	txmanager.NewTxView(rds)
@@ -126,7 +126,7 @@ package test
 //		Auth            AuthKey
 //	}
 //
-//	file := strings.TrimSuffix(os.Getenv("GOPATH"), "/") + "/src/github.com/Loopring/relay/test/testdata.toml"
+//	file := strings.TrimSuffix(os.Getenv("GOPATH"), "/") + "/src/github.com/expanse-org/relay/test/testdata.toml"
 //	io, err := os.Open(file)
 //	if err != nil {
 //		panic(err)

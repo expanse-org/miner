@@ -1,8 +1,8 @@
 package endpoint
 
 import (
-	motan "github.com/Loopring/motan-go/core"
-	mpro "github.com/Loopring/motan-go/protocol"
+	motan "github.com/expanse-org/motan-go/core"
+	mpro "github.com/expanse-org/motan-go/protocol"
 	"sync/atomic"
 	"time"
 )

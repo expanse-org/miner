@@ -20,11 +20,11 @@ package ordermanager
 
 import (
 	"fmt"
-	"github.com/Loopring/relay-cluster/dao"
-	"github.com/Loopring/relay-lib/eth/loopringaccessor"
-	"github.com/Loopring/relay-lib/marketcap"
-	util "github.com/Loopring/relay-lib/marketutil"
-	"github.com/Loopring/relay-lib/types"
+	"github.com/expanse-org/relay-cluster/dao"
+	"github.com/expanse-org/relay-lib/eth/loopringaccessor"
+	"github.com/expanse-org/relay-lib/marketcap"
+	util "github.com/expanse-org/relay-lib/marketutil"
+	"github.com/expanse-org/relay-lib/types"
 	"math/big"
 )
 

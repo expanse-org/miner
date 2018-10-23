@@ -19,14 +19,14 @@
 package gasprice_evaluator
 
 import (
-	"github.com/Loopring/relay-lib/cache"
-	"github.com/Loopring/relay-lib/cloudwatch"
-	"github.com/Loopring/relay-lib/eth/accessor"
-	ethtyp "github.com/Loopring/relay-lib/eth/types"
-	"github.com/Loopring/relay-lib/log"
-	"github.com/Loopring/relay-lib/sns"
-	"github.com/Loopring/relay-lib/types"
-	"github.com/Loopring/relay-lib/zklock"
+	"github.com/expanse-org/relay-lib/cache"
+	"github.com/expanse-org/relay-lib/cloudwatch"
+	"github.com/expanse-org/relay-lib/eth/accessor"
+	ethtyp "github.com/expanse-org/relay-lib/eth/types"
+	"github.com/expanse-org/relay-lib/log"
+	"github.com/expanse-org/relay-lib/sns"
+	"github.com/expanse-org/relay-lib/types"
+	"github.com/expanse-org/relay-lib/zklock"
 	"math/big"
 	"sort"
 )

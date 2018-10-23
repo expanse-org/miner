@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"strings"
 
-	motan "github.com/Loopring/motan-go/core"
-	"github.com/Loopring/motan-go/log"
-	mpro "github.com/Loopring/motan-go/protocol"
+	motan "github.com/expanse-org/motan-go/core"
+	"github.com/expanse-org/motan-go/log"
+	mpro "github.com/expanse-org/motan-go/protocol"
 )
 
 type MotanServer struct {

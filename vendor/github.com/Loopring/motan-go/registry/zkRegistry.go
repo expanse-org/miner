@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/samuel/go-zookeeper/zk"
-	cluster "github.com/Loopring/motan-go/cluster"
-	motan "github.com/Loopring/motan-go/core"
-	"github.com/Loopring/motan-go/log"
+	cluster "github.com/expanse-org/motan-go/cluster"
+	motan "github.com/expanse-org/motan-go/core"
+	"github.com/expanse-org/motan-go/log"
 )
 
 const (

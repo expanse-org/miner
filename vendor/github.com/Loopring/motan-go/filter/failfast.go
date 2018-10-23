@@ -5,7 +5,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	motan "github.com/Loopring/motan-go/core"
+	motan "github.com/expanse-org/motan-go/core"
 )
 
 const (

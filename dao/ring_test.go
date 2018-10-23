@@ -19,16 +19,16 @@
 package dao_test
 
 import (
-	"github.com/Loopring/miner/config"
-			"github.com/Loopring/relay-lib/log"
+	"github.com/expanse-org/miner/config"
+			"github.com/expanse-org/relay-lib/log"
 	"strings"
 	"testing"
-	"github.com/Loopring/miner/dao"
+	"github.com/expanse-org/miner/dao"
 	"time"
 )
 
 func loadConfig() *config.GlobalConfig {
-	path := strings.TrimSuffix("/Users/yuhongyu/Desktop/service/go/src/github.com/Loopring/miner/config/miner.toml", "")
+	path := strings.TrimSuffix("/Users/yuhongyu/Desktop/service/go/src/github.com/expanse-org/miner/config/miner.toml", "")
 	c := config.LoadConfig(path)
 	log.Initialize(c.Log)
 

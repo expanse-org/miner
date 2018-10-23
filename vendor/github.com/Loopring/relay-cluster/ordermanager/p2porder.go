@@ -19,9 +19,9 @@
 package ordermanager
 
 import (
-	"github.com/Loopring/relay-lib/cache"
-	"github.com/Loopring/relay-lib/eventemitter"
-	"github.com/Loopring/relay-lib/types"
+	"github.com/expanse-org/relay-lib/cache"
+	"github.com/expanse-org/relay-lib/eventemitter"
+	"github.com/expanse-org/relay-lib/types"
 	"strings"
 )
 

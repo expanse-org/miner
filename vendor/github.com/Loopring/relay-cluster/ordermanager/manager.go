@@ -19,13 +19,13 @@
 package ordermanager
 
 import (
-	"github.com/Loopring/relay-cluster/dao"
-	notify "github.com/Loopring/relay-cluster/util"
-	"github.com/Loopring/relay-lib/eventemitter"
-	"github.com/Loopring/relay-lib/log"
-	"github.com/Loopring/relay-lib/marketcap"
-	util "github.com/Loopring/relay-lib/marketutil"
-	"github.com/Loopring/relay-lib/types"
+	"github.com/expanse-org/relay-cluster/dao"
+	notify "github.com/expanse-org/relay-cluster/util"
+	"github.com/expanse-org/relay-lib/eventemitter"
+	"github.com/expanse-org/relay-lib/log"
+	"github.com/expanse-org/relay-lib/marketcap"
+	util "github.com/expanse-org/relay-lib/marketutil"
+	"github.com/expanse-org/relay-lib/types"
 	"github.com/ethereum/go-ethereum/common"
 	"math/big"
 )

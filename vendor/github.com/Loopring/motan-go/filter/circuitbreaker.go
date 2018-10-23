@@ -5,8 +5,8 @@ import (
 
 	"github.com/afex/hystrix-go/hystrix"
 	"github.com/pkg/errors"
-	motan "github.com/Loopring/motan-go/core"
-	"github.com/Loopring/motan-go/log"
+	motan "github.com/expanse-org/motan-go/core"
+	"github.com/expanse-org/motan-go/log"
 )
 
 const (

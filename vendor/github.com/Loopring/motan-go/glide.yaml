@@ -1,4 +1,4 @@
-package: github.com/Loopring/motan-go
+package: github.com/expanse-org/motan-go
 import:
 - package: github.com/afex/hystrix-go
   subpackages:

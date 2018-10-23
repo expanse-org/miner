@@ -6,9 +6,9 @@ import (
 	"sync"
 	"time"
 
-	motan "github.com/Loopring/motan-go/core"
+	motan "github.com/expanse-org/motan-go/core"
 
-	"github.com/Loopring/motan-go/metrics"
+	"github.com/expanse-org/motan-go/metrics"
 )
 
 var initSync sync.Once

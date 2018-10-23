@@ -3,8 +3,8 @@ package core
 import (
 	"reflect"
 
-	cfg "github.com/Loopring/motan-go/config"
-	"github.com/Loopring/motan-go/log"
+	cfg "github.com/expanse-org/motan-go/config"
+	"github.com/expanse-org/motan-go/log"
 	"strings"
 )
 

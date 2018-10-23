@@ -13,7 +13,7 @@ if [ ! -d /opt/loopring/miner ]; then
     sudo chmod -R 755 $SVC_DIR
 fi
 
-SRC_DIR=$GOPATH/src/github.com/Loopring/miner
+SRC_DIR=$GOPATH/src/github.com/expanse-org/miner
 if [ ! -d $SRC_DIR ]; then
       sudo mkdir -p $SRC_DIR
 	  sudo chown -R ubuntu:ubuntu $GOPATH

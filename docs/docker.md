@@ -11,7 +11,7 @@ create log&config dir
 ```bash
 mkdir your_log_path your_config_path your_keystore_path
 ```
-config miner.toml，[reference](https://github.com/Loopring/relay-cluster/wiki/%E9%83%A8%E7%BD%B2miner#%E9%83%A8%E7%BD%B2%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
+config miner.toml，[reference](https://github.com/expanse-org/relay-cluster/wiki/%E9%83%A8%E7%BD%B2miner#%E9%83%A8%E7%BD%B2%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
 
 before deployment, perform telnet tests according to the ports related to the configuration files mysql, redis, kafka, and zk to ensure that these dependencies can be accessed normally.
 

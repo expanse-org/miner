@@ -19,9 +19,9 @@
 package loopringaccessor
 
 import (
-	"github.com/Loopring/relay-lib/eth/abi"
-	"github.com/Loopring/relay-lib/eth/accessor"
-	"github.com/Loopring/relay-lib/log"
+	"github.com/expanse-org/relay-lib/eth/abi"
+	"github.com/expanse-org/relay-lib/eth/accessor"
+	"github.com/expanse-org/relay-lib/log"
 	"github.com/ethereum/go-ethereum/common"
 )
 

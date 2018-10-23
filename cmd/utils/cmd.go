@@ -22,7 +22,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/Loopring/relay-lib/params"
+	"github.com/expanse-org/relay-lib/params"
 	"gopkg.in/urfave/cli.v1"
 )
 

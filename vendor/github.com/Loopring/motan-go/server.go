@@ -8,9 +8,9 @@ import (
 	"strings"
 	"sync"
 
-	motan "github.com/Loopring/motan-go/core"
-	"github.com/Loopring/motan-go/log"
-	mserver "github.com/Loopring/motan-go/server"
+	motan "github.com/expanse-org/motan-go/core"
+	"github.com/expanse-org/motan-go/log"
+	mserver "github.com/expanse-org/motan-go/server"
 	"runtime/debug"
 )
 

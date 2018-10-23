@@ -19,7 +19,7 @@
 package util
 
 import (
-	"github.com/Loopring/relay-lib/kafka"
+	"github.com/expanse-org/relay-lib/kafka"
 	"log"
 )
 

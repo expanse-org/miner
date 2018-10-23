@@ -10,12 +10,12 @@ import (
 	"strconv"
 	"time"
 
-	cluster "github.com/Loopring/motan-go/cluster"
-	motan "github.com/Loopring/motan-go/core"
-	"github.com/Loopring/motan-go/log"
-	mpro "github.com/Loopring/motan-go/protocol"
-	registry "github.com/Loopring/motan-go/registry"
-	mserver "github.com/Loopring/motan-go/server"
+	cluster "github.com/expanse-org/motan-go/cluster"
+	motan "github.com/expanse-org/motan-go/core"
+	"github.com/expanse-org/motan-go/log"
+	mpro "github.com/expanse-org/motan-go/protocol"
+	registry "github.com/expanse-org/motan-go/registry"
+	mserver "github.com/expanse-org/motan-go/server"
 )
 
 const (

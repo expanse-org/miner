@@ -21,8 +21,8 @@ package types
 import (
 	"encoding/json"
 	"fmt"
-	util "github.com/Loopring/relay-lib/marketutil"
-	"github.com/Loopring/relay-lib/types"
+	util "github.com/expanse-org/relay-lib/marketutil"
+	"github.com/expanse-org/relay-lib/types"
 	"github.com/ethereum/go-ethereum/common"
 	"math/big"
 )

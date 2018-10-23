@@ -25,7 +25,7 @@ import (
 	"io"
 	"syscall"
 
-	"github.com/Loopring/miner/cmd/utils"
+	"github.com/expanse-org/miner/cmd/utils"
 	"github.com/ethereum/go-ethereum/accounts/keystore"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"

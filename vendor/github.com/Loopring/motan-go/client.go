@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"sync"
 
-	cluster "github.com/Loopring/motan-go/cluster"
-	motan "github.com/Loopring/motan-go/core"
-	mpro "github.com/Loopring/motan-go/protocol"
+	cluster "github.com/expanse-org/motan-go/cluster"
+	motan "github.com/expanse-org/motan-go/core"
+	mpro "github.com/expanse-org/motan-go/protocol"
 )
 
 var (

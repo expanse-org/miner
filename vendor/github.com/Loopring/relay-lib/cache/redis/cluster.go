@@ -20,7 +20,7 @@ package redis
 
 import (
 	"fmt"
-	"github.com/Loopring/relay-lib/log"
+	"github.com/expanse-org/relay-lib/log"
 	"github.com/chasex/redis-go-cluster"
 )
 

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strings"
 
-	motan "github.com/Loopring/motan-go/core"
-	"github.com/Loopring/motan-go/log"
+	motan "github.com/expanse-org/motan-go/core"
+	"github.com/expanse-org/motan-go/log"
 )
 
 const (

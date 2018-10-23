@@ -5,8 +5,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/Loopring/motan-go/config"
-	"github.com/Loopring/motan-go/log"
+	"github.com/expanse-org/motan-go/config"
+	"github.com/expanse-org/motan-go/log"
 
 	"github.com/rcrowley/go-metrics"
 )

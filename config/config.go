@@ -23,19 +23,19 @@ import (
 	"os"
 	"reflect"
 
-	"github.com/Loopring/relay-cluster/accountmanager"
-	"github.com/Loopring/relay-cluster/ordermanager"
-	"github.com/Loopring/relay-lib/cache/redis"
-	"github.com/Loopring/relay-lib/cloudwatch"
-	"github.com/Loopring/relay-lib/dao"
-	"github.com/Loopring/relay-lib/eth/accessor"
-	"github.com/Loopring/relay-lib/eth/loopringaccessor"
-	"github.com/Loopring/relay-lib/kafka"
-	"github.com/Loopring/relay-lib/marketcap"
-	"github.com/Loopring/relay-lib/marketutil"
-	"github.com/Loopring/relay-lib/motan"
-	"github.com/Loopring/relay-lib/sns"
-	"github.com/Loopring/relay-lib/zklock"
+	"github.com/expanse-org/relay-cluster/accountmanager"
+	"github.com/expanse-org/relay-cluster/ordermanager"
+	"github.com/expanse-org/relay-lib/cache/redis"
+	"github.com/expanse-org/relay-lib/cloudwatch"
+	"github.com/expanse-org/relay-lib/dao"
+	"github.com/expanse-org/relay-lib/eth/accessor"
+	"github.com/expanse-org/relay-lib/eth/loopringaccessor"
+	"github.com/expanse-org/relay-lib/kafka"
+	"github.com/expanse-org/relay-lib/marketcap"
+	"github.com/expanse-org/relay-lib/marketutil"
+	"github.com/expanse-org/relay-lib/motan"
+	"github.com/expanse-org/relay-lib/sns"
+	"github.com/expanse-org/relay-lib/zklock"
 	"github.com/naoina/toml"
 	"go.uber.org/zap"
 )
@@ -58,7 +58,7 @@ func LoadConfig(file string) *GlobalConfig {
 	}
 
 	//if c.Common.Develop {
-	//	basedir := strings.TrimSuffix(os.Getenv("GOPATH"), "/") + "/src/github.com/Loopring/relay/"
+	//	basedir := strings.TrimSuffix(os.Getenv("GOPATH"), "/") + "/src/github.com/expanse-org/relay/"
 	//	c.Keystore.Keydir = basedir + c.Keystore.Keydir
 	//
 	//	for idx, path := range c.Log.ZapOpts.OutputPaths {

@@ -19,12 +19,12 @@
 package timing_matcher
 
 import (
-	"github.com/Loopring/relay-lib/eth/accessor"
-	"github.com/Loopring/relay-lib/eventemitter"
-	"github.com/Loopring/relay-lib/kafka"
-	"github.com/Loopring/relay-lib/log"
-	"github.com/Loopring/relay-lib/types"
-	"github.com/Loopring/relay-lib/utils"
+	"github.com/expanse-org/relay-lib/eth/accessor"
+	"github.com/expanse-org/relay-lib/eventemitter"
+	"github.com/expanse-org/relay-lib/kafka"
+	"github.com/expanse-org/relay-lib/log"
+	"github.com/expanse-org/relay-lib/types"
+	"github.com/expanse-org/relay-lib/utils"
 	"math/big"
 	"sync"
 	"time"

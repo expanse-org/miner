@@ -20,16 +20,16 @@ package miner
 
 import (
 	"errors"
-	"github.com/Loopring/relay-lib/log"
+	"github.com/expanse-org/relay-lib/log"
 	"math"
 	"math/big"
 
 	"fmt"
-	"github.com/Loopring/miner/config"
-	"github.com/Loopring/relay-lib/eth/gasprice_evaluator"
-	"github.com/Loopring/relay-lib/eth/loopringaccessor"
-	"github.com/Loopring/relay-lib/marketcap"
-	"github.com/Loopring/relay-lib/types"
+	"github.com/expanse-org/miner/config"
+	"github.com/expanse-org/relay-lib/eth/gasprice_evaluator"
+	"github.com/expanse-org/relay-lib/eth/loopringaccessor"
+	"github.com/expanse-org/relay-lib/marketcap"
+	"github.com/expanse-org/relay-lib/types"
 	"github.com/ethereum/go-ethereum/common"
 )
 

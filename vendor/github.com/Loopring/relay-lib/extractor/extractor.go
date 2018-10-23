@@ -21,10 +21,10 @@ package extractor
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/Loopring/relay-lib/eventemitter"
-	"github.com/Loopring/relay-lib/kafka"
-	"github.com/Loopring/relay-lib/types"
-	"github.com/Loopring/relay-lib/log"
+	"github.com/expanse-org/relay-lib/eventemitter"
+	"github.com/expanse-org/relay-lib/kafka"
+	"github.com/expanse-org/relay-lib/types"
+	"github.com/expanse-org/relay-lib/log"
 )
 
 // 接收来自kafka消息,解析成不同数据类型后使用lib/eventemitter模块发送

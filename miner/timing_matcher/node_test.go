@@ -20,8 +20,8 @@ package timing_matcher_test
 
 import (
 	"encoding/json"
-	"github.com/Loopring/miner/miner/timing_matcher"
-	"github.com/Loopring/relay-lib/log"
+	"github.com/expanse-org/miner/miner/timing_matcher"
+	"github.com/expanse-org/relay-lib/log"
 	"go.uber.org/zap"
 	"testing"
 )
@@ -54,7 +54,7 @@ func init() {
 	//cache.NewCache(redis.RedisOptions{Host: "127.0.0.1", Port: "6379"})
 	//
 	//options := marketutil.MarketOptions{}
-	//options.TokenFile = "/Users/yuhongyu/Desktop/service/go/src/github.com/Loopring/relay/config/tokens.json"
+	//options.TokenFile = "/Users/yuhongyu/Desktop/service/go/src/github.com/expanse-org/relay/config/tokens.json"
 	//marketutil.Initialize(&options)
 	//
 	//zkconfig := zklock.ZkLockConfig{}

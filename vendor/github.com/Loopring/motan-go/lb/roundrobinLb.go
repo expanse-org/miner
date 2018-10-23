@@ -1,7 +1,7 @@
 package lb
 
 import (
-	motan "github.com/Loopring/motan-go/core"
+	motan "github.com/expanse-org/motan-go/core"
 	"sync/atomic"
 )
 

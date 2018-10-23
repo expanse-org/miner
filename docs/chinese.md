@@ -14,7 +14,7 @@ Miner是Loopring中非常重要的一个角色，负责从订单池中发现并�
     
     ```bash
     #本项目代码使用Go编写，请确保已经完成Go环境的配置。
-    git clone https://github.com/Loopring/miner.git
+    git clone https://github.com/expanse-org/miner.git
     cd miner
     go build -o build/bin/miner cmd/lrc/*
     #miner依赖于relay-cluster、extractor、mysql、redis、kafka、zookeeper、eth节点等

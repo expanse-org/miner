@@ -20,10 +20,10 @@ package marketutil
 
 import (
 	"encoding/json"
-	"github.com/Loopring/relay-lib/cache"
-	"github.com/Loopring/relay-lib/eth/loopringaccessor"
-	"github.com/Loopring/relay-lib/log"
-	"github.com/Loopring/relay-lib/zklock"
+	"github.com/expanse-org/relay-lib/cache"
+	"github.com/expanse-org/relay-lib/eth/loopringaccessor"
+	"github.com/expanse-org/relay-lib/log"
+	"github.com/expanse-org/relay-lib/zklock"
 	"github.com/ethereum/go-ethereum/common"
 	gocache "github.com/patrickmn/go-cache"
 	"github.com/pkg/errors"
