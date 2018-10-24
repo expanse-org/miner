@@ -33,8 +33,8 @@ type LoopringParams struct {
 	DelegateAbi      *abi.ABI
 	TokenRegistryAbi *abi.ABI
 	//NameRegistryAbi   *abi.ABI
-	WethAbi *abi.ABI
-	//WethAddress       common.Address
+	WexpAbi *abi.ABI
+	//WexpAddress       common.Address
 	ProtocolAddresses map[common.Address]*ProtocolAddress
 	DelegateAddresses map[common.Address]bool
 }
@@ -54,7 +54,7 @@ func Initialize(options LoopringProtocolOptions) error {
 		return err
 	}
 
-	if loopringParams.WethAbi, err = abi.New(WethAbiStr); nil != err {
+	if loopringParams.WexpAbi, err = abi.New(WexpAbiStr); nil != err {
 		return err
 	}
 

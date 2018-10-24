@@ -125,8 +125,8 @@ func (r *TransactionJsonResult) FromCutoffPairEntity(entity *TransactionEntity) 
 	return nil
 }
 
-func (r *TransactionJsonResult) FromWethDepositEntity(entity *TransactionEntity) error {
-	var content WethDepositContent
+func (r *TransactionJsonResult) FromWexpDepositEntity(entity *TransactionEntity) error {
+	var content WexpDepositContent
 	if err := json.Unmarshal([]byte(entity.Content), &content); err != nil {
 		return err
 	}
@@ -138,8 +138,8 @@ func (r *TransactionJsonResult) FromWethDepositEntity(entity *TransactionEntity)
 	return nil
 }
 
-func (r *TransactionJsonResult) FromWethWithdrawalEntity(entity *TransactionEntity) error {
-	var content WethWithdrawalContent
+func (r *TransactionJsonResult) FromWexpWithdrawalEntity(entity *TransactionEntity) error {
+	var content WexpWithdrawalContent
 	if err := json.Unmarshal([]byte(entity.Content), &content); err != nil {
 		return err
 	}

@@ -106,7 +106,7 @@ func CutoffPairView(src *types.CutoffPairEvent) (TransactionView, error) {
 	return tx, nil
 }
 
-func WethDepositView(src *types.WethDepositEvent) ([]TransactionView, error) {
+func WexpDepositView(src *types.WexpDepositEvent) ([]TransactionView, error) {
 	var (
 		list     []TransactionView
 		tx1, tx2 TransactionView
@@ -122,14 +122,14 @@ func WethDepositView(src *types.WethDepositEvent) ([]TransactionView, error) {
 	tx1.Type = TX_TYPE_CONVERT_OUTCOME
 
 	tx2 = tx1
-	tx2.Symbol = SYMBOL_WETH
+	tx2.Symbol = SYMBOL_WEXP
 	tx2.Type = TX_TYPE_CONVERT_INCOME
 
 	list = append(list, tx1, tx2)
 	return list, nil
 }
 
-func WethWithdrawalView(src *types.WethWithdrawalEvent) ([]TransactionView, error) {
+func WexpWithdrawalView(src *types.WexpWithdrawalEvent) ([]TransactionView, error) {
 	var (
 		list     []TransactionView
 		tx1, tx2 TransactionView
@@ -145,7 +145,7 @@ func WethWithdrawalView(src *types.WethWithdrawalEvent) ([]TransactionView, erro
 	tx1.Type = TX_TYPE_CONVERT_INCOME
 
 	tx2 = tx1
-	tx2.Symbol = SYMBOL_WETH
+	tx2.Symbol = SYMBOL_WEXP
 	tx2.Type = TX_TYPE_CONVERT_OUTCOME
 
 	list = append(list, tx1, tx2)

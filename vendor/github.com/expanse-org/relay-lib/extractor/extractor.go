@@ -118,10 +118,10 @@ func topicToEvent(topic string) interface{} {
 		event = &types.ApprovalEvent{}
 	case eventemitter.Transfer:
 		event = &types.TransferEvent{}
-	case eventemitter.WethDeposit:
-		event = &types.WethDepositEvent{}
-	case eventemitter.WethWithdrawal:
-		event = &types.WethWithdrawalEvent{}
+	case eventemitter.WexpDeposit:
+		event = &types.WexpDepositEvent{}
+	case eventemitter.WexpWithdrawal:
+		event = &types.WexpWithdrawalEvent{}
 	case eventemitter.TokenRegistered:
 		event = &types.TokenRegisterEvent{}
 	case eventemitter.TokenUnRegistered:
@@ -172,10 +172,10 @@ func eventToTopic(event interface{}) string {
 		topic = eventemitter.Approve
 	case *types.TransferEvent:
 		topic = eventemitter.Transfer
-	case *types.WethDepositEvent:
-		topic = eventemitter.WethDeposit
-	case *types.WethWithdrawalEvent:
-		topic = eventemitter.WethWithdrawal
+	case *types.WexpDepositEvent:
+		topic = eventemitter.WexpDeposit
+	case *types.WexpWithdrawalEvent:
+		topic = eventemitter.WexpWithdrawal
 	case *types.TokenRegisterEvent:
 		topic = eventemitter.TokenRegistered
 	case *types.TokenUnRegisterEvent:

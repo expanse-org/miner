@@ -30,8 +30,8 @@ type Topic string
 const (
 	NewOrder = "NewOrder"
 
-	WethDeposit         = "WethDeposit"
-	WethWithdrawal      = "WethWithdrawal"
+	WexpDeposit         = "WexpDeposit"
+	WexpWithdrawal      = "WexpWithdrawal"
 	Approve             = "Approve"
 	Transfer            = "Transfer"
 	EthTransfer         = "EthTransfer"

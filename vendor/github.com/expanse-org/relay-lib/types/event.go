@@ -177,13 +177,13 @@ type RingMinedEvent struct {
 	Err          string         `json:"err"`
 }
 
-type WethDepositEvent struct {
+type WexpDepositEvent struct {
 	TxInfo
 	Dst    common.Address `json:"dst"`
 	Amount *big.Int       `json:"amount"`
 }
 
-type WethWithdrawalEvent struct {
+type WexpWithdrawalEvent struct {
 	TxInfo
 	Src    common.Address `json:"src"`
 	Amount *big.Int       `json:"amount"`

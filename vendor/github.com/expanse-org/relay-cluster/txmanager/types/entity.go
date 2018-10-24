@@ -67,12 +67,12 @@ type CutoffPairContent struct {
 	CutoffTimeStamp int64  `json:"cutoff"`
 }
 
-type WethWithdrawalContent struct {
+type WexpWithdrawalContent struct {
 	Src    string `json:"src"`
 	Amount string `json:"amount"`
 }
 
-type WethDepositContent struct {
+type WexpDepositContent struct {
 	Dst    string `json:"dst"`
 	Amount string `json:"amount"`
 }
@@ -176,12 +176,12 @@ func (tx *TransactionEntity) FromCutoffPairEvent(src *types.CutoffPairEvent) err
 }
 
 // 充值和提现from和to都是用户钱包自己的地址，因为合约限制了发送方msg.sender
-func (tx *TransactionEntity) FromWethDepositEvent(src *types.WethDepositEvent) error {
+func (tx *TransactionEntity) FromWexpDepositEvent(src *types.WexpDepositEvent) error {
 	if err := tx.fullFilled(src.TxInfo); err != nil {
 		return err
 	}
 
-	var content WethDepositContent
+	var content WexpDepositContent
 	content.Dst = src.Dst.Hex()
 	content.Amount = src.Amount.String()
 
@@ -194,12 +194,12 @@ func (tx *TransactionEntity) FromWethDepositEvent(src *types.WethDepositEvent) e
 	return nil
 }
 
-func (tx *TransactionEntity) FromWethWithdrawalEvent(src *types.WethWithdrawalEvent) error {
+func (tx *TransactionEntity) FromWexpWithdrawalEvent(src *types.WexpWithdrawalEvent) error {
 	if err := tx.fullFilled(src.TxInfo); err != nil {
 		return err
 	}
 
-	var content WethWithdrawalContent
+	var content WexpWithdrawalContent
 	content.Src = src.Src.Hex()
 	content.Amount = src.Amount.String()
 

@@ -33,8 +33,8 @@ const (
 	METHOD_CANCEL_ORDER         = "cancelOrder"
 	METHOD_CUTOFF_ALL           = "cancelAllOrders"
 	METHOD_CUTOFF_PAIR          = "cancelAllOrdersByTradingPair"
-	METHOD_WETH_DEPOSIT         = "deposit"
-	METHOD_WETH_WITHDRAWAL      = "withdraw"
+	METHOD_WEXP_DEPOSIT         = "deposit"
+	METHOD_WEXP_WITHDRAWAL      = "withdraw"
 	METHOD_APPROVE              = "approve"
 	METHOD_TRANSFER             = "transfer"
 	METHOD_TOKEN_REGISTRY       = "registerToken"
@@ -257,21 +257,21 @@ func (method *CutoffPairMethod) ConvertDown() *types.CutoffPairEvent {
 	return evt
 }
 
-type WethDepositMethod struct {
+type WexpDepositMethod struct {
 	Value *big.Int `fieldId:"0"`
 }
 
-func (e *WethDepositMethod) ConvertDown() *types.WethDepositEvent {
-	evt := &types.WethDepositEvent{}
+func (e *WexpDepositMethod) ConvertDown() *types.WexpDepositEvent {
+	evt := &types.WexpDepositEvent{}
 	return evt
 }
 
-type WethWithdrawalMethod struct {
+type WexpWithdrawalMethod struct {
 	Value *big.Int `fieldName:"wad" fieldId:"0"`
 }
 
-func (e *WethWithdrawalMethod) ConvertDown() *types.WethWithdrawalEvent {
-	evt := &types.WethWithdrawalEvent{}
+func (e *WexpWithdrawalMethod) ConvertDown() *types.WexpWithdrawalEvent {
+	evt := &types.WexpWithdrawalEvent{}
 	evt.Amount = e.Value
 
 	return evt

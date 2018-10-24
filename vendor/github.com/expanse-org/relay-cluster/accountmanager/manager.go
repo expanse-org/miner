@@ -91,8 +91,8 @@ func sendBlockEndKafkaMsg(msg interface{}) error {
 func (accountManager *AccountManager) Start() {
 	transferWatcher := &eventemitter.Watcher{Concurrent: false, Handle: accountManager.handleTokenTransfer}
 	approveWatcher := &eventemitter.Watcher{Concurrent: false, Handle: accountManager.handleApprove}
-	wethDepositWatcher := &eventemitter.Watcher{Concurrent: false, Handle: accountManager.handleWethDeposit}
-	wethWithdrawalWatcher := &eventemitter.Watcher{Concurrent: false, Handle: accountManager.handleWethWithdrawal}
+	wexpDepositWatcher := &eventemitter.Watcher{Concurrent: false, Handle: accountManager.handleWexpDeposit}
+	wexpWithdrawalWatcher := &eventemitter.Watcher{Concurrent: false, Handle: accountManager.handleWexpWithdrawal}
 	blockForkWatcher := &eventemitter.Watcher{Concurrent: false, Handle: accountManager.handleBlockFork}
 	blockEndWatcher := &eventemitter.Watcher{Concurrent: false, Handle: accountManager.handleBlockEnd}
 	blockNewWatcher := &eventemitter.Watcher{Concurrent: false, Handle: accountManager.handleBlockNew}
@@ -102,8 +102,8 @@ func (accountManager *AccountManager) Start() {
 	eventemitter.On(eventemitter.EthTransfer, ethTransferWatcher)
 	eventemitter.On(eventemitter.Block_End, blockEndWatcher)
 	eventemitter.On(eventemitter.Block_New, blockNewWatcher)
-	eventemitter.On(eventemitter.WethDeposit, wethDepositWatcher)
-	eventemitter.On(eventemitter.WethWithdrawal, wethWithdrawalWatcher)
+	eventemitter.On(eventemitter.WexpDeposit, wexpDepositWatcher)
+	eventemitter.On(eventemitter.WexpWithdrawal, wexpWithdrawalWatcher)
 	eventemitter.On(eventemitter.ChainForkDetected, blockForkWatcher)
 }
 
@@ -145,8 +145,8 @@ func (a *AccountManager) handleApprove(input eventemitter.EventData) error {
 	return nil
 }
 
-func (a *AccountManager) handleWethDeposit(input eventemitter.EventData) (err error) {
-	event := input.(*types.WethDepositEvent)
+func (a *AccountManager) handleWexpDeposit(input eventemitter.EventData) (err error) {
+	event := input.(*types.WexpDepositEvent)
 	if event == nil || event.Status != types.TX_STATUS_SUCCESS {
 		log.Info("received wrong status event, drop it")
 		return nil
@@ -156,8 +156,8 @@ func (a *AccountManager) handleWethDeposit(input eventemitter.EventData) (err er
 	return
 }
 
-func (a *AccountManager) handleWethWithdrawal(input eventemitter.EventData) (err error) {
-	event := input.(*types.WethWithdrawalEvent)
+func (a *AccountManager) handleWexpWithdrawal(input eventemitter.EventData) (err error) {
+	event := input.(*types.WexpWithdrawalEvent)
 	if event == nil || event.Status != types.TX_STATUS_SUCCESS {
 		log.Info("received wrong status event, drop it")
 		return nil

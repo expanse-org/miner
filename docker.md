@@ -101,5 +101,5 @@ While sync finished, before relay start, make sure default_block_number in relay
 
 **tokens.json file**
 tokens.json file listed tokens and markets those exchanges want to support.
-you can combine markets like WETH-LRC
+you can combine markets like WEXP-LRC
 

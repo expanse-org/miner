@@ -36,8 +36,8 @@ const (
 	EVENT_ADDRESS_DEAUTHORIZED = "AddressDeauthorized"
 	EVENT_TRANSFER             = "Transfer"
 	EVENT_APPROVAL             = "Approval"
-	EVENT_WETH_DEPOSIT         = "Deposit"
-	EVENT_WETH_WITHDRAWAL      = "Withdrawal"
+	EVENT_WEXP_DEPOSIT         = "Deposit"
+	EVENT_WEXP_WITHDRAWAL      = "Withdrawal"
 )
 
 type TransferEvent struct {
@@ -291,13 +291,13 @@ func (e *AddressDeAuthorizedEvent) ConvertDown() *types.AddressDeAuthorizedEvent
 }
 
 // event  Deposit(address indexed dst, uint wad);
-type WethDepositEvent struct {
+type WexpDepositEvent struct {
 	DstAddress common.Address `fieldName:"dst" fieldId:"0"` // 充值到哪个地址
 	Value      *big.Int       `fieldName:"wad" fieldId:"1"`
 }
 
-func (e *WethDepositEvent) ConvertDown() *types.WethDepositEvent {
-	evt := &types.WethDepositEvent{}
+func (e *WexpDepositEvent) ConvertDown() *types.WexpDepositEvent {
+	evt := &types.WexpDepositEvent{}
 	evt.Dst = e.DstAddress
 	evt.Amount = e.Value
 
@@ -305,13 +305,13 @@ func (e *WethDepositEvent) ConvertDown() *types.WethDepositEvent {
 }
 
 // event  Withdrawal(address indexed src, uint wad);
-type WethWithdrawalEvent struct {
+type WexpWithdrawalEvent struct {
 	SrcAddress common.Address `fieldName:"src" fieldId:"0"`
 	Value      *big.Int       `fieldName:"wad" fieldId:"1"`
 }
 
-func (e *WethWithdrawalEvent) ConvertDown() *types.WethWithdrawalEvent {
-	evt := &types.WethWithdrawalEvent{}
+func (e *WexpWithdrawalEvent) ConvertDown() *types.WexpWithdrawalEvent {
+	evt := &types.WexpWithdrawalEvent{}
 	evt.Amount = e.Value
 
 	return evt
