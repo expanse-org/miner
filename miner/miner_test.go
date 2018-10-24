@@ -76,7 +76,7 @@ func TestNewMiner(t *testing.T) {
 //	ks.Unlock(acc3, "1")
 //	rdsService := dao.NewRdsService(cfg.Mysql)
 //	userManager := usermanager.NewUserManager(&cfg.UserManager, rdsService)
-//	ethaccessor.Initialize(cfg.Accessor, cfg.Common, util.WethTokenAddress())
+//	ethaccessor.Initialize(cfg.Accessor, cfg.Common, util.WexpTokenAddress())
 //	ethaccessor.IncludeGasPriceEvaluator()
 //
 //	marketCapProvider := marketcap.NewMarketCapProvider(cfg.MarketCap)
@@ -130,7 +130,7 @@ func TestNewMiner(t *testing.T) {
 //
 //	lrc := util.SupportTokens["LRC"].Protocol
 //
-//	eth := util.SupportMarkets["WETH"].Protocol
+//	eth := util.SupportMarkets["WEXP"].Protocol
 //
 //	account1 := entity.Accounts[0]
 //	account2 := entity.Accounts[1]

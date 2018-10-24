@@ -251,7 +251,7 @@ func (cluster *Cluster) handleConnTimeout(node *redisNode, cmd string, args []in
 	return nil, errors.New(errMsg)
     }
 
-    // When MOVED received, we check wether move adress equal to 
+    // When MOVED received, we check wexper move adress equal to 
     // previous one. If equal, then it's just an connection timeout 
     // error, return error and carry on. If not, then the master may 
     // down or unreachable, a new master has served the slot, request 

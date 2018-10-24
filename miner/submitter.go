@@ -599,7 +599,7 @@ func (submitter *RingSubmitter) monitorAndReSubmitRing() {
 //	ringState := ringSubmitInfo.RawRing
 //	ringState.LegalFee = new(big.Rat).SetInt(big.NewInt(int64(0)))
 //	ethPrice, _ := submitter.marketCapProvider.GetEthCap()
-//	ethPrice = ethPrice.Quo(ethPrice, new(big.Rat).SetInt(util.AllTokens["WETH"].Decimals))
+//	ethPrice = ethPrice.Quo(ethPrice, new(big.Rat).SetInt(util.AllTokens["WEXP"].Decimals))
 //	lrcAddress := loopringaccessor.ProtocolAddresses()[ringSubmitInfo.ProtocolAddress].LrcTokenAddress
 //	spenderAddress := loopringaccessor.ProtocolAddresses()[ringSubmitInfo.ProtocolAddress].DelegateAddress
 //	useSplit := false
