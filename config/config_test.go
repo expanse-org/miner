@@ -20,7 +20,7 @@ package config_test
 
 //import (
 //	"encoding/json"
-//	"github.com/Loopring/relay/test"
+//	"github.com/expanse-org/relay/test"
 //	"testing"
 //)
 //

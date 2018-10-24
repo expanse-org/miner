@@ -24,7 +24,7 @@ import (
 	"runtime"
 	"sort"
 
-	"github.com/Loopring/miner/cmd/utils"
+	"github.com/expanse-org/miner/cmd/utils"
 	"gopkg.in/urfave/cli.v1"
 )
 

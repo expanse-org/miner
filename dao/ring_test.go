@@ -19,10 +19,10 @@
 package dao_test
 
 import (
-	"github.com/Loopring/miner/config"
-	"github.com/Loopring/miner/dao"
-	"github.com/Loopring/relay-lib/crypto"
-	"github.com/Loopring/relay-lib/log"
+	"github.com/expanse-org/miner/config"
+	"github.com/expanse-org/miner/dao"
+	"github.com/expanse-org/relay-lib/crypto"
+	"github.com/expanse-org/relay-lib/log"
 	"github.com/ethereum/go-ethereum/accounts"
 	"github.com/ethereum/go-ethereum/accounts/keystore"
 	"github.com/ethereum/go-ethereum/common"
@@ -32,7 +32,7 @@ import (
 )
 
 func loadConfig() *config.GlobalConfig {
-	path := strings.TrimSuffix(os.Getenv("GOPATH"), "/") + "/src/github.com/Loopring/relay/config/relay.toml"
+	path := strings.TrimSuffix(os.Getenv("GOPATH"), "/") + "/src/github.com/expanse-org/relay/config/relay.toml"
 	c := config.LoadConfig(path)
 	log.Initialize(c.Log)
 

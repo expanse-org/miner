@@ -14,7 +14,7 @@ motan-registry:
 
   zk-registry:
     protocol: zookeeper
-    host: 127.0.0.1
+    host: 172.31.37.241
     port: 2181
     registrySessionTimeout: 10000
     requestTimeout: 5000

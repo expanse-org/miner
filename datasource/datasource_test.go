@@ -20,11 +20,11 @@ package datasource_test
 
 import (
 	"encoding/json"
-	"github.com/Loopring/miner/config"
-	"github.com/Loopring/miner/datasource"
-	"github.com/Loopring/relay-lib/log"
-	"github.com/Loopring/relay-lib/marketcap"
-	"github.com/Loopring/relay-lib/motan"
+	"github.com/expanse-org/miner/config"
+	"github.com/expanse-org/miner/datasource"
+	"github.com/expanse-org/relay-lib/log"
+	"github.com/expanse-org/relay-lib/marketcap"
+	"github.com/expanse-org/relay-lib/motan"
 	"github.com/ethereum/go-ethereum/common"
 	"go.uber.org/zap"
 	"testing"

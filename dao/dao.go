@@ -19,8 +19,8 @@
 package dao
 
 import (
-	"github.com/Loopring/relay-lib/dao"
-	"github.com/Loopring/relay-lib/log"
+	"github.com/expanse-org/relay-lib/dao"
+	"github.com/expanse-org/relay-lib/log"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 

@@ -21,7 +21,7 @@ package utils
 import (
 	"reflect"
 
-	"github.com/Loopring/miner/config"
+	"github.com/expanse-org/miner/config"
 	"gopkg.in/urfave/cli.v1"
 )
 

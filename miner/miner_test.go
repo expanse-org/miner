@@ -21,7 +21,7 @@ package miner_test
 import ()
 
 //func loadConfig() *config.GlobalConfig {
-//	path := strings.TrimSuffix(os.Getenv("GOPATH"), "/") + "/src/github.com/Loopring/relay/config/relay.toml"
+//	path := strings.TrimSuffix(os.Getenv("GOPATH"), "/") + "/src/github.com/expanse-org/relay/config/relay.toml"
 //	c := config.LoadConfig(path)
 //	log.Initialize(c.Log)
 //
