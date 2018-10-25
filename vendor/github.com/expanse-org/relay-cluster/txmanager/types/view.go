@@ -64,7 +64,7 @@ func ApproveView(src *types.ApprovalEvent) (TransactionView, error) {
 func CancelView(src *types.OrderCancelledEvent) (TransactionView, error) {
 	var tx TransactionView
 
-	tx.Symbol = SYMBOL_ETH
+	tx.Symbol = SYMBOL_EXP
 	if err := tx.fullFilled(src.TxInfo); err != nil {
 		return tx, err
 	}
@@ -82,7 +82,7 @@ func CutoffView(src *types.CutoffEvent) (TransactionView, error) {
 	if err := tx.fullFilled(src.TxInfo); err != nil {
 		return tx, err
 	}
-	tx.Symbol = SYMBOL_ETH
+	tx.Symbol = SYMBOL_EXP
 	tx.Owner = src.Owner
 	tx.Amount = src.Cutoff
 	tx.Type = TX_TYPE_CUTOFF
@@ -98,7 +98,7 @@ func CutoffPairView(src *types.CutoffPairEvent) (TransactionView, error) {
 		return tx, err
 	}
 
-	tx.Symbol = SYMBOL_ETH
+	tx.Symbol = SYMBOL_EXP
 	tx.Amount = src.Cutoff
 	tx.Owner = src.Owner
 	tx.Type = TX_TYPE_CUTOFF_PAIR
@@ -118,7 +118,7 @@ func WexpDepositView(src *types.WexpDepositEvent) ([]TransactionView, error) {
 
 	tx1.Owner = src.Dst
 	tx1.Amount = src.Amount
-	tx1.Symbol = SYMBOL_ETH
+	tx1.Symbol = SYMBOL_EXP
 	tx1.Type = TX_TYPE_CONVERT_OUTCOME
 
 	tx2 = tx1
@@ -141,7 +141,7 @@ func WexpWithdrawalView(src *types.WexpWithdrawalEvent) ([]TransactionView, erro
 
 	tx1.Owner = src.Src
 	tx1.Amount = src.Amount
-	tx1.Symbol = SYMBOL_ETH
+	tx1.Symbol = SYMBOL_EXP
 	tx1.Type = TX_TYPE_CONVERT_INCOME
 
 	tx2 = tx1
@@ -189,7 +189,7 @@ func EthTransferView(src *types.EthTransferEvent) ([]TransactionView, error) {
 	}
 
 	tx1.Amount = src.Value
-	tx1.Symbol = SYMBOL_ETH
+	tx1.Symbol = SYMBOL_EXP
 
 	if src.Value.Cmp(big.NewInt(0)) > 0 {
 		tx1.Owner = src.From

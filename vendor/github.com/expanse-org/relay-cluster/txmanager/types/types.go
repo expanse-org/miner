@@ -21,7 +21,7 @@ package types
 type TxType uint8
 
 const (
-	SYMBOL_ETH  = "EXP"
+	SYMBOL_EXP  = "EXP"
 	SYMBOL_WEXP = "WEXP"
 	SYMBOL_LRC  = "LRC"
 )
