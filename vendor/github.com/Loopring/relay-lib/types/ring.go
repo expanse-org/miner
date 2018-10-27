@@ -19,9 +19,10 @@
 package types
 
 import (
-	"github.com/expanse-org/relay-lib/crypto"
-	"github.com/ethereum/go-ethereum/common"
 	"math/big"
+
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/expanse-org/relay-lib/crypto"
 )
 
 type NameRegistryInfo struct {
@@ -33,10 +34,10 @@ type NameRegistryInfo struct {
 }
 
 // 旷工在成本节约和fee上二选一，撮合者计算出:
-// 1.fee(lrc)的市场价(法币交易价格)
+// 1.fee(pex)的市场价(法币交易价格)
 // 2.成本节约(savingShare)的市场价(法币交易价格)
 // 撮合者在fee和savingShare中二选一，作为自己的利润，
-// 如果撮合者选择fee，则成本节约分给订单发起者，如果选择成本节约，则需要返还给用户一定的lrc
+// 如果撮合者选择fee，则成本节约分给订单发起者，如果选择成本节约，则需要返还给用户一定的pex
 // 这样一来，撮合者的利润判断公式应该是max(fee, savingShare - fee * s),s为固定比例
 // 此外，在选择最优环路的时候，撮合者会在确定了选择fee/savingShare后，选择某个具有最大利润的环路
 // 但是，根据谷歌竞拍法则(A出价10,B出价20,最终成交价为10)，撮合者最终获得的利润只能是利润最小的环路利润
@@ -89,9 +90,9 @@ func (ring *Ring) GenerateHash(feeReceipt common.Address) common.Hash {
 	)
 	bs := []byte{}
 	bs = append(bs, ring.GenerateUniqueId().Bytes()...)
-		bs = append(bs, 	feeReceipt.Bytes()...)
+	bs = append(bs, feeReceipt.Bytes()...)
 	bs = append(bs, common.LeftPadBytes(ring.FeeSelections().Bytes(), 2)...)
-	println("#########",common.Bytes2Hex(bs))
+	println("#########", common.Bytes2Hex(bs))
 	return common.BytesToHash(hashBytes)
 }
 
@@ -135,7 +136,7 @@ func (ring *Ring) ValidSinceTime() int64 {
 //		order := filledOrder.OrderState.RawOrder
 //		ringSubmitArgs.AddressList = append(ringSubmitArgs.AddressList, [4]common.Address{order.Owner, order.TokenS, order.WalletAddress, order.AuthAddr})
 //		rateAmountS, _ := new(big.Int).SetString(filledOrder.RateAmountS.FloatString(0), 10)
-//		ringSubmitArgs.UintArgsList = append(ringSubmitArgs.UintArgsList, [6]*big.Int{order.AmountS, order.AmountB, order.ValidSince, order.ValidUntil, order.LrcFee, rateAmountS})
+//		ringSubmitArgs.UintArgsList = append(ringSubmitArgs.UintArgsList, [6]*big.Int{order.AmountS, order.AmountB, order.ValidSince, order.ValidUntil, order.PexFee, rateAmountS})
 //		ringSubmitArgs.Uint8ArgsList = append(ringSubmitArgs.Uint8ArgsList, [1]uint8{order.MarginSplitPercentage})
 //
 //		ringSubmitArgs.BuyNoMoreThanAmountBList = append(ringSubmitArgs.BuyNoMoreThanAmountBList, order.BuyNoMoreThanAmountB)

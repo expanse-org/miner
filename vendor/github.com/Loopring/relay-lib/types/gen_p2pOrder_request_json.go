@@ -7,8 +7,8 @@ import (
 	"errors"
 	"math/big"
 
-	"github.com/expanse-org/relay-lib/crypto"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/expanse-org/relay-lib/crypto"
 )
 
 var _ = (*p2pOrderJsonRequestMarshaling)(nil)
@@ -27,7 +27,7 @@ func (p P2POrderJsonRequest) MarshalJSON() ([]byte, error) {
 		AmountB               *Big                       `json:"amountB" gencodec:"required"`
 		ValidSince            *Big                       `json:"validSince" gencodec:"required"`
 		ValidUntil            *Big                       `json:"validUntil" gencodec:"required"`
-		LrcFee                *Big                       `json:"lrcFee" `
+		PexFee                *Big                       `json:"pexFee" `
 		BuyNoMoreThanAmountB  bool                       `json:"buyNoMoreThanAmountB" gencodec:"required"`
 		MarginSplitPercentage uint8                      `json:"marginSplitPercentage" gencodec:"required"`
 		V                     uint8                      `json:"v" gencodec:"required"`
@@ -56,7 +56,7 @@ func (p P2POrderJsonRequest) MarshalJSON() ([]byte, error) {
 	enc.AmountB = (*Big)(p.AmountB)
 	enc.ValidSince = (*Big)(p.ValidSince)
 	enc.ValidUntil = (*Big)(p.ValidUntil)
-	enc.LrcFee = (*Big)(p.LrcFee)
+	enc.PexFee = (*Big)(p.PexFee)
 	enc.BuyNoMoreThanAmountB = p.BuyNoMoreThanAmountB
 	enc.MarginSplitPercentage = p.MarginSplitPercentage
 	enc.V = p.V
@@ -89,7 +89,7 @@ func (p *P2POrderJsonRequest) UnmarshalJSON(input []byte) error {
 		AmountB               *Big                        `json:"amountB" gencodec:"required"`
 		ValidSince            *Big                        `json:"validSince" gencodec:"required"`
 		ValidUntil            *Big                        `json:"validUntil" gencodec:"required"`
-		LrcFee                *Big                        `json:"lrcFee" `
+		PexFee                *Big                        `json:"pexFee" `
 		BuyNoMoreThanAmountB  *bool                       `json:"buyNoMoreThanAmountB" gencodec:"required"`
 		MarginSplitPercentage *uint8                      `json:"marginSplitPercentage" gencodec:"required"`
 		V                     *uint8                      `json:"v" gencodec:"required"`
@@ -153,8 +153,8 @@ func (p *P2POrderJsonRequest) UnmarshalJSON(input []byte) error {
 		return errors.New("missing required field 'validUntil' for P2POrderJsonRequest")
 	}
 	p.ValidUntil = (*big.Int)(dec.ValidUntil)
-	if dec.LrcFee != nil {
-		p.LrcFee = (*big.Int)(dec.LrcFee)
+	if dec.PexFee != nil {
+		p.PexFee = (*big.Int)(dec.PexFee)
 	}
 	if dec.BuyNoMoreThanAmountB == nil {
 		return errors.New("missing required field 'buyNoMoreThanAmountB' for P2POrderJsonRequest")

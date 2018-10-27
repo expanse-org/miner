@@ -19,9 +19,10 @@
 package types
 
 import (
-	"github.com/expanse-org/relay-lib/crypto"
-	"github.com/ethereum/go-ethereum/common"
 	"math/big"
+
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/expanse-org/relay-lib/crypto"
 )
 
 //go:generate gencodec -type P2POrderJsonRequest -field-override p2pOrderJsonRequestMarshaling -out gen_p2pOrder_request_json.go
@@ -38,7 +39,7 @@ type P2POrderJsonRequest struct {
 	ValidSince      *big.Int                   `json:"validSince" gencodec:"required"` //
 	ValidUntil      *big.Int                   `json:"validUntil" gencodec:"required"` // 订单过期时间
 	// Salt                  int64          `json:"salt" gencodec:"required"`
-	LrcFee                *big.Int       `json:"lrcFee" ` // 交易总费用,部分成交的费用按该次撮合实际卖出代币额与比例计算
+	PexFee                *big.Int       `json:"pexFee" ` // 交易总费用,部分成交的费用按该次撮合实际卖出代币额与比例计算
 	BuyNoMoreThanAmountB  bool           `json:"buyNoMoreThanAmountB" gencodec:"required"`
 	MarginSplitPercentage uint8          `json:"marginSplitPercentage" gencodec:"required"` // 不为0时支付给交易所的分润比例，否则视为100%
 	V                     uint8          `json:"v" gencodec:"required"`
@@ -61,7 +62,7 @@ type p2pOrderJsonRequestMarshaling struct {
 	AmountB    *Big
 	ValidSince *Big
 	ValidUntil *Big
-	LrcFee     *Big
+	PexFee     *Big
 }
 
 func ToP2POrder(request *P2POrderJsonRequest) *Order {
@@ -76,7 +77,7 @@ func ToP2POrder(request *P2POrderJsonRequest) *Order {
 	order.ValidUntil = request.ValidUntil
 	order.AuthAddr = request.AuthAddr
 	order.AuthPrivateKey = request.AuthPrivateKey
-	order.LrcFee = request.LrcFee
+	order.PexFee = request.PexFee
 	order.BuyNoMoreThanAmountB = request.BuyNoMoreThanAmountB
 	order.MarginSplitPercentage = request.MarginSplitPercentage
 	order.V = request.V

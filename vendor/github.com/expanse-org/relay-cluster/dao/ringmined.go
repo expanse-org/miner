@@ -19,9 +19,10 @@
 package dao
 
 import (
-	"github.com/expanse-org/relay-lib/types"
-	"github.com/ethereum/go-ethereum/common"
 	"math/big"
+
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/expanse-org/relay-lib/types"
 )
 
 // todo(fuk): delete field isRinghashReserved
@@ -36,7 +37,7 @@ type RingMinedEvent struct {
 	FeeRecipient       string `gorm:"column:fee_recipient;type:varchar(42)" json:"feeRecipient"`
 	IsRinghashReserved bool   `gorm:"column:is_ring_hash_reserved;" json:"isRinghashReserved"`
 	BlockNumber        int64  `gorm:"column:block_number;type:bigint" json:"blockNumber"`
-	TotalLrcFee        string `gorm:"column:total_lrc_fee;type:varchar(40)" json:"totalLrcFee"`
+	TotalPexFee        string `gorm:"column:total_pex_fee;type:varchar(40)" json:"totalPexFee"`
 	TradeAmount        int    `gorm:"column:trade_amount" json:"tradeAmount"`
 	Time               int64  `gorm:"column:time;type:bigint" json:"timestamp"`
 	Fork               bool   `gorm:"column:fork"`
@@ -49,7 +50,7 @@ type RingMinedEvent struct {
 
 func (r *RingMinedEvent) ConvertDown(event *types.RingMinedEvent) error {
 	r.RingIndex = event.RingIndex.String()
-	r.TotalLrcFee = event.TotalLrcFee.String()
+	r.TotalPexFee = event.TotalPexFee.String()
 	r.Protocol = event.Protocol.Hex()
 	r.DelegateAddress = event.DelegateAddress.Hex()
 	r.Miner = event.Miner.Hex()
@@ -71,7 +72,7 @@ func (r *RingMinedEvent) ConvertDown(event *types.RingMinedEvent) error {
 
 func (r *RingMinedEvent) ConvertUp(event *types.RingMinedEvent) error {
 	event.RingIndex, _ = new(big.Int).SetString(r.RingIndex, 0)
-	event.TotalLrcFee, _ = new(big.Int).SetString(r.TotalLrcFee, 0)
+	event.TotalPexFee, _ = new(big.Int).SetString(r.TotalPexFee, 0)
 	event.Ringhash = common.HexToHash(r.RingHash)
 	event.TxHash = common.HexToHash(r.TxHash)
 	event.Miner = common.HexToAddress(r.Miner)

@@ -19,8 +19,9 @@
 package types
 
 import (
-	"github.com/ethereum/go-ethereum/common"
 	"math/big"
+
+	"github.com/ethereum/go-ethereum/common"
 )
 
 type TxStatus uint8
@@ -136,8 +137,8 @@ type OrderFilledEvent struct {
 	RingIndex     *big.Int       `json:"ring_index"`
 	AmountS       *big.Int       `json:"amount_s"`
 	AmountB       *big.Int       `json:"amount_b"`
-	LrcReward     *big.Int       `json:"lrc_reward"`
-	LrcFee        *big.Int       `json:"lrc_fee"`
+	PexReward     *big.Int       `json:"pex_reward"`
+	PexFee        *big.Int       `json:"pex_fee"`
 	SplitS        *big.Int       `json:"split_s"`
 	SplitB        *big.Int       `json:"split_b"`
 	Market        string         `json:"market"`
@@ -169,7 +170,7 @@ type CutoffPairEvent struct {
 type RingMinedEvent struct {
 	TxInfo
 	RingIndex    *big.Int       `json:"ring_index"`
-	TotalLrcFee  *big.Int       `json:"total_lrc_fee"`
+	TotalPexFee  *big.Int       `json:"total_pex_fee"`
 	TradeAmount  int            `json:"trade_amount"`
 	Ringhash     common.Hash    `json:"ringhash"`
 	Miner        common.Address `json:"miner"`
@@ -207,7 +208,7 @@ type RingSubmitResultEvent struct {
 	BlockNumber  *big.Int    `json:"block_number"`
 	UsedGas      *big.Int    `json:"used_gas"`
 	Err          string      `json:"err"`
-	TxNonce uint64 `json:"tx_nonce"`
+	TxNonce      uint64      `json:"tx_nonce"`
 }
 
 type ForkedEvent struct {

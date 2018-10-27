@@ -20,17 +20,19 @@ package miner
 
 import (
 	"errors"
-	"github.com/expanse-org/relay-lib/log"
 	"math"
 	"math/big"
 
+	"github.com/expanse-org/relay-lib/log"
+
 	"fmt"
+
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/expanse-org/miner/config"
 	"github.com/expanse-org/relay-lib/eth/gasprice_evaluator"
 	"github.com/expanse-org/relay-lib/eth/loopringaccessor"
 	"github.com/expanse-org/relay-lib/marketcap"
 	"github.com/expanse-org/relay-lib/types"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 type Evaluator struct {
@@ -43,7 +45,7 @@ type Evaluator struct {
 	feeReceipt               common.Address
 
 	gasPriceRate float64
-	matcher Matcher
+	matcher      Matcher
 }
 
 func ReducedRate(ringState *types.Ring) *big.Rat {
@@ -87,7 +89,7 @@ func (e *Evaluator) ComputeRing(ringState *types.Ring) error {
 	ringState.ReducedRate = ReducedRate(ringState)
 
 	//todo:get the fee for select the ring of mix income
-	//LRC等比例下降，首先需要计算fillAmountS
+	//PEX等比例下降，首先需要计算fillAmountS
 	//分润的fee，首先需要计算fillAmountS，fillAmountS取决于整个环路上的完全匹配的订单
 	//如何计算最小成交量的订单，计算下一次订单的卖出或买入，然后根据比例替换
 	minVolumeIdx := 0
@@ -191,13 +193,13 @@ func (e *Evaluator) ComputeRing(ringState *types.Ring) error {
 func (e *Evaluator) computeFeeOfRingAndOrder(ringState *types.Ring) error {
 
 	var err error
-	var feeReceiptLrcAvailableAmount *big.Rat
-	var lrcAddress common.Address
+	var feeReceiptPexAvailableAmount *big.Rat
+	var pexAddress common.Address
 	if impl, exists := loopringaccessor.ProtocolAddresses()[ringState.Orders[0].OrderState.RawOrder.Protocol]; exists {
 		var err error
-		lrcAddress = impl.LrcTokenAddress
-		//todo:the address transfer lrcreward should be msg.sender not feeReceipt
-		if feeReceiptLrcAvailableAmount, err = e.matcher.GetAccountAvailableAmount(e.feeReceipt, lrcAddress, impl.DelegateAddress); nil != err {
+		pexAddress = impl.PexTokenAddress
+		//todo:the address transfer pexreward should be msg.sender not feeReceipt
+		if feeReceiptPexAvailableAmount, err = e.matcher.GetAccountAvailableAmount(e.feeReceipt, pexAddress, impl.DelegateAddress); nil != err {
 			return err
 		}
 	} else {
@@ -231,21 +233,21 @@ func (e *Evaluator) computeFeeOfRingAndOrder(ringState *types.Ring) error {
 			}
 		}
 
-		//compute lrcFee
+		//compute pexFee
 		rate := new(big.Rat).Quo(filledOrder.FillAmountS, new(big.Rat).SetInt(filledOrder.OrderState.RawOrder.AmountS))
-		filledOrder.LrcFee = new(big.Rat).SetInt(filledOrder.OrderState.RawOrder.LrcFee)
-		filledOrder.LrcFee.Mul(filledOrder.LrcFee, rate)
+		filledOrder.PexFee = new(big.Rat).SetInt(filledOrder.OrderState.RawOrder.PexFee)
+		filledOrder.PexFee.Mul(filledOrder.PexFee, rate)
 
-		if filledOrder.AvailableLrcBalance.Cmp(filledOrder.LrcFee) <= 0 {
-			filledOrder.LrcFee = filledOrder.AvailableLrcBalance
+		if filledOrder.AvailablePexBalance.Cmp(filledOrder.PexFee) <= 0 {
+			filledOrder.PexFee = filledOrder.AvailablePexBalance
 		}
 
-		legalAmountOfLrc, err1 := e.getLegalCurrency(lrcAddress, filledOrder.LrcFee)
+		legalAmountOfPex, err1 := e.getLegalCurrency(pexAddress, filledOrder.PexFee)
 		if nil != err1 {
 			return err1
 		}
 
-		filledOrder.LegalLrcFee = legalAmountOfLrc
+		filledOrder.LegalPexFee = legalAmountOfPex
 		splitPer := new(big.Rat)
 		if filledOrder.OrderState.RawOrder.MarginSplitPercentage > 100 {
 			splitPer.SetFrac64(int64(100), int64(100))
@@ -254,29 +256,29 @@ func (e *Evaluator) computeFeeOfRingAndOrder(ringState *types.Ring) error {
 		}
 		legalAmountOfSaving.Mul(legalAmountOfSaving, splitPer)
 		filledOrder.LegalFeeS = legalAmountOfSaving
-		log.Debugf("orderhash:%s, raw.lrc:%s, AvailableLrcBalance:%s, lrcFee:%s, feeS:%s, legalAmountOfLrc:%s,  legalAmountOfSaving:%s, minerLrcAvailable:%s",
+		log.Debugf("orderhash:%s, raw.Pex:%s, AvailablePexBalance:%s, pexFee:%s, feeS:%s, legalAmountOfPex:%s,  legalAmountOfSaving:%s, minerPexAvailable:%s",
 			filledOrder.OrderState.RawOrder.Hash.Hex(),
-			filledOrder.OrderState.RawOrder.LrcFee.String(),
-			filledOrder.AvailableLrcBalance.FloatString(2),
-			filledOrder.LrcFee.FloatString(2),
+			filledOrder.OrderState.RawOrder.PexFee.String(),
+			filledOrder.AvailablePexBalance.FloatString(2),
+			filledOrder.PexFee.FloatString(2),
 			filledOrder.FeeS.FloatString(2),
-			legalAmountOfLrc.FloatString(2), legalAmountOfSaving.FloatString(2), feeReceiptLrcAvailableAmount.FloatString(2))
+			legalAmountOfPex.FloatString(2), legalAmountOfSaving.FloatString(2), feeReceiptPexAvailableAmount.FloatString(2))
 
-		lrcFee := new(big.Rat).SetInt(big.NewInt(int64(2)))
-		lrcFee.Mul(lrcFee, filledOrder.LegalLrcFee)
-		if lrcFee.Sign() == 0 || (lrcFee.Cmp(filledOrder.LegalFeeS) < 0 && feeReceiptLrcAvailableAmount.Cmp(filledOrder.LrcFee) > 0) {
+		pexFee := new(big.Rat).SetInt(big.NewInt(int64(2)))
+		pexFee.Mul(pexFee, filledOrder.LegalPexFee)
+		if pexFee.Sign() == 0 || (pexFee.Cmp(filledOrder.LegalFeeS) < 0 && feeReceiptPexAvailableAmount.Cmp(filledOrder.PexFee) > 0) {
 			filledOrder.FeeSelection = 1
-			filledOrder.LegalFeeS.Sub(filledOrder.LegalFeeS, filledOrder.LegalLrcFee)
-			filledOrder.LrcReward = filledOrder.LegalLrcFee
+			filledOrder.LegalFeeS.Sub(filledOrder.LegalFeeS, filledOrder.LegalPexFee)
+			filledOrder.PexReward = filledOrder.LegalPexFee
 			ringState.LegalFee.Add(ringState.LegalFee, filledOrder.LegalFeeS)
 
-			feeReceiptLrcAvailableAmount.Sub(feeReceiptLrcAvailableAmount, filledOrder.LrcFee)
-			//log.Debugf("Miner,lrcReward:%s  legalFee:%s", lrcReward.FloatString(10), filledOrder.LegalFee.FloatString(10))
+			feeReceiptPexAvailableAmount.Sub(feeReceiptPexAvailableAmount, filledOrder.PexFee)
+			//log.Debugf("Miner,pexReward:%s  legalFee:%s", pexReward.FloatString(10), filledOrder.LegalFee.FloatString(10))
 		} else {
 			filledOrder.FeeSelection = 0
-			filledOrder.LegalFeeS = filledOrder.LegalLrcFee
-			filledOrder.LrcReward = new(big.Rat).SetInt(big.NewInt(int64(0)))
-			ringState.LegalFee.Add(ringState.LegalFee, filledOrder.LegalLrcFee)
+			filledOrder.LegalFeeS = filledOrder.LegalPexFee
+			filledOrder.PexReward = new(big.Rat).SetInt(big.NewInt(int64(0)))
+			ringState.LegalFee.Add(ringState.LegalFee, filledOrder.LegalPexFee)
 		}
 	}
 
@@ -285,27 +287,27 @@ func (e *Evaluator) computeFeeOfRingAndOrder(ringState *types.Ring) error {
 	//legalFee := new(big.Rat).SetInt(big.NewInt(int64(0)))
 	//feeSelections := []uint8{}
 	//legalFees := []*big.Rat{}
-	//lrcRewards := []*big.Rat{}
+	//pexRewards := []*big.Rat{}
 	//
 	//for _,filledOrder := range ringState.Orders {
-	//	lrcFee := new(big.Rat).SetInt(big.NewInt(int64(2)))
-	//	lrcFee.Mul(lrcFee, filledOrder.LegalLrcFee)
-	//	log.Debugf("lrcFee:%s, filledOrder.LegalFeeS:%s, minerLrcBalance:%s, filledOrder.LrcFee:%s", lrcFee.FloatString(3), filledOrder.LegalFeeS.FloatString(3), minerLrcBalance.FloatString(3), filledOrder.LrcFee.FloatString(3))
-	//	if lrcFee.Cmp(filledOrder.LegalFeeS) < 0 && minerLrcAvailableAmount.Cmp(filledOrder.LrcFee) > 0 {
+	//	pexFee := new(big.Rat).SetInt(big.NewInt(int64(2)))
+	//	pexFee.Mul(pexFee, filledOrder.LegalPexFee)
+	//	log.Debugf("pexFee:%s, filledOrder.LegalFeeS:%s, minerPexBalance:%s, filledOrder.PexFee:%s", pexFee.FloatString(3), filledOrder.LegalFeeS.FloatString(3), minerPexBalance.FloatString(3), filledOrder.PexFee.FloatString(3))
+	//	if pexFee.Cmp(filledOrder.LegalFeeS) < 0 && minerPexAvailableAmount.Cmp(filledOrder.PexFee) > 0 {
 	//		feeSelections = append(feeSelections, 1)
 	//		fee := new(big.Rat).Set(filledOrder.LegalFeeS)
-	//		fee.Sub(fee, filledOrder.LegalLrcFee)
+	//		fee.Sub(fee, filledOrder.LegalPexFee)
 	//		legalFees = append(legalFees, fee)
-	//		lrcRewards = append(lrcRewards, filledOrder.LegalLrcFee)
+	//		pexRewards = append(pexRewards, filledOrder.LegalPexFee)
 	//		legalFee.Add(legalFee, fee)
 	//
-	//		minerLrcAvailableAmount.Sub(minerLrcAvailableAmount, filledOrder.LrcFee)
-	//		//log.Debugf("Miner,lrcReward:%s  legalFee:%s", lrcReward.FloatString(10), filledOrder.LegalFee.FloatString(10))
+	//		minerPexAvailableAmount.Sub(minerPexAvailableAmount, filledOrder.PexFee)
+	//		//log.Debugf("Miner,pexReward:%s  legalFee:%s", pexReward.FloatString(10), filledOrder.LegalFee.FloatString(10))
 	//	} else {
 	//		feeSelections = append(feeSelections, 0)
-	//		legalFees = append(legalFees, filledOrder.LegalLrcFee)
-	//		lrcRewards = append(lrcRewards, new(big.Rat).SetInt(big.NewInt(int64(0))))
-	//		legalFee.Add(legalFee, filledOrder.LegalLrcFee)
+	//		legalFees = append(legalFees, filledOrder.LegalPexFee)
+	//		pexRewards = append(pexRewards, new(big.Rat).SetInt(big.NewInt(int64(0))))
+	//		legalFee.Add(legalFee, filledOrder.LegalPexFee)
 	//	}
 	//}
 
@@ -364,7 +366,7 @@ func (e *Evaluator) getLegalCurrency(tokenAddress common.Address, amount *big.Ra
 	return e.marketCapProvider.LegalCurrencyValue(tokenAddress, amount)
 }
 
-func (e *Evaluator) EstimateGasPrice(orderLen int) (gasprice,gas *big.Int) {
+func (e *Evaluator) EstimateGasPrice(orderLen int) (gasprice, gas *big.Int) {
 	gasprice = gasprice_evaluator.EstimateGasPrice(e.minGasPrice, e.maxGasPrice)
 	gas = e.gasUsedWithLength[orderLen]
 	return gasprice, gas
@@ -372,7 +374,7 @@ func (e *Evaluator) EstimateGasPrice(orderLen int) (gasprice,gas *big.Int) {
 
 func (e *Evaluator) evaluateReceived(ringState *types.Ring) {
 	ringState.Received = big.NewRat(int64(0), int64(1))
-	gasprice,gas := e.EstimateGasPrice(len(ringState.Orders))
+	gasprice, gas := e.EstimateGasPrice(len(ringState.Orders))
 	ringState.GasPrice = big.NewInt(int64(float64(gasprice.Uint64()) * e.gasPriceRate))
 	//log.Debugf("len(ringState.Orders):%d", len(ringState.Orders))
 	ringState.Gas = new(big.Int)

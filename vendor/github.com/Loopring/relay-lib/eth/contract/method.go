@@ -20,11 +20,12 @@ package contract
 
 import (
 	"fmt"
+	"math/big"
+
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/expanse-org/relay-lib/crypto"
 	"github.com/expanse-org/relay-lib/eth/abi"
 	"github.com/expanse-org/relay-lib/types"
-	"github.com/ethereum/go-ethereum/common"
-	"math/big"
 )
 
 const (
@@ -53,7 +54,7 @@ func TxIsSubmitRing(methodName string) bool {
 
 type SubmitRingMethodInputs struct {
 	AddressList        [][4]common.Address `fieldName:"addressList" fieldId:"0"`   // owner,tokenS, wallet, authAddress
-	UintArgsList       [][6]*big.Int       `fieldName:"uintArgsList" fieldId:"1"`  // amountS, amountB, validSince (second),validUntil (second), lrcFee, rateAmountS.
+	UintArgsList       [][6]*big.Int       `fieldName:"uintArgsList" fieldId:"1"`  // amountS, amountB, validSince (second),validUntil (second), pexFee, rateAmountS.
 	Uint8ArgsList      [][1]uint8          `fieldName:"uint8ArgsList" fieldId:"2"` // marginSplitPercentageList
 	BuyNoMoreThanBList []bool              `fieldName:"buyNoMoreThanAmountBList" fieldId:"3"`
 	VList              []uint8             `fieldName:"vList" fieldId:"4"`
@@ -78,7 +79,7 @@ func GenerateSubmitRingMethodInputsData(ring *types.Ring, feeReceipt common.Addr
 		order := filledOrder.OrderState.RawOrder
 		inputs.AddressList = append(inputs.AddressList, [4]common.Address{order.Owner, order.TokenS, order.WalletAddress, order.AuthAddr})
 		rateAmountS, _ := new(big.Int).SetString(filledOrder.RateAmountS.FloatString(0), 10)
-		inputs.UintArgsList = append(inputs.UintArgsList, [6]*big.Int{order.AmountS, order.AmountB, order.ValidSince, order.ValidUntil, order.LrcFee, rateAmountS})
+		inputs.UintArgsList = append(inputs.UintArgsList, [6]*big.Int{order.AmountS, order.AmountB, order.ValidSince, order.ValidUntil, order.PexFee, rateAmountS})
 		inputs.Uint8ArgsList = append(inputs.Uint8ArgsList, [1]uint8{order.MarginSplitPercentage})
 
 		inputs.BuyNoMoreThanBList = append(inputs.BuyNoMoreThanBList, order.BuyNoMoreThanAmountB)
@@ -172,7 +173,7 @@ func (m *SubmitRingMethodInputs) ConvertDown() (*types.SubmitRingMethodEvent, er
 		order.AmountB = m.UintArgsList[i][1]
 		order.ValidSince = m.UintArgsList[i][2]
 		order.ValidUntil = m.UintArgsList[i][3]
-		order.LrcFee = m.UintArgsList[i][4]
+		order.PexFee = m.UintArgsList[i][4]
 		// order.rateAmountS
 
 		order.MarginSplitPercentage = m.Uint8ArgsList[i][0]
@@ -196,7 +197,7 @@ func (m *SubmitRingMethodInputs) ConvertDown() (*types.SubmitRingMethodEvent, er
 
 type CancelOrderMethod struct {
 	AddressList    [5]common.Address `fieldName:"addresses" fieldId:"0"`   //  owner, tokenS, tokenB, authAddr
-	OrderValues    [6]*big.Int       `fieldName:"orderValues" fieldId:"1"` //  amountS, amountB, validSince (second), validUntil (second), lrcFee, and cancelAmount
+	OrderValues    [6]*big.Int       `fieldName:"orderValues" fieldId:"1"` //  amountS, amountB, validSince (second), validUntil (second), pexFee, and cancelAmount
 	BuyNoMoreThanB bool              `fieldName:"buyNoMoreThanAmountB" fieldId:"2"`
 	MarginSplit    uint8             `fieldName:"marginSplitPercentage" fieldId:"3"`
 	V              uint8             `fieldName:"v" fieldId:"4"`
@@ -218,7 +219,7 @@ func (m *CancelOrderMethod) ConvertDown() (*types.Order, *big.Int, error) {
 	order.AmountB = m.OrderValues[1]
 	order.ValidSince = m.OrderValues[2]
 	order.ValidUntil = m.OrderValues[3]
-	order.LrcFee = m.OrderValues[4]
+	order.PexFee = m.OrderValues[4]
 	cancelAmount := m.OrderValues[5]
 
 	order.BuyNoMoreThanAmountB = bool(m.BuyNoMoreThanB)

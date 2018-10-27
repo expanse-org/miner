@@ -1,13 +1,14 @@
 package ordermanager
 
 import (
+	"math/big"
+
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/expanse-org/relay-cluster/dao"
 	"github.com/expanse-org/relay-cluster/usermanager"
 	"github.com/expanse-org/relay-lib/log"
 	"github.com/expanse-org/relay-lib/marketcap"
 	"github.com/expanse-org/relay-lib/types"
-	"github.com/ethereum/go-ethereum/common"
-	"math/big"
 )
 
 type OrderViewer interface {
@@ -23,7 +24,7 @@ type OrderViewer interface {
 	RingMinedPageQuery(query map[string]interface{}, pageIndex, pageSize int) (dao.PageResult, error)
 	IsOrderCutoff(protocol, owner, token1, token2 common.Address, validsince *big.Int) bool
 	GetFrozenAmount(owner common.Address, token common.Address, statusSet []types.OrderStatus, delegateAddress common.Address) (*big.Int, error)
-	GetFrozenLRCFee(owner common.Address, statusSet []types.OrderStatus) (*big.Int, error)
+	GetFrozenPEXFee(owner common.Address, statusSet []types.OrderStatus) (*big.Int, error)
 }
 
 type OrderViewerImpl struct {
@@ -215,8 +216,8 @@ func (om *OrderViewerImpl) GetFrozenAmount(owner common.Address, token common.Ad
 	return totalAmount, nil
 }
 
-func (om *OrderViewerImpl) GetFrozenLRCFee(owner common.Address, statusSet []types.OrderStatus) (*big.Int, error) {
-	orderList, err := om.rds.GetFrozenLrcFee(owner, statusSet)
+func (om *OrderViewerImpl) GetFrozenPEXFee(owner common.Address, statusSet []types.OrderStatus) (*big.Int, error) {
+	orderList, err := om.rds.GetFrozenPexFee(owner, statusSet)
 	if err != nil {
 		return nil, err
 	}
@@ -228,8 +229,8 @@ func (om *OrderViewerImpl) GetFrozenLRCFee(owner common.Address, statusSet []typ
 	}
 
 	for _, v := range orderList {
-		lrcFee, _ := new(big.Int).SetString(v.LrcFee, 0)
-		totalAmount.Add(totalAmount, lrcFee)
+		pexFee, _ := new(big.Int).SetString(v.PexFee, 0)
+		totalAmount.Add(totalAmount, pexFee)
 	}
 
 	return totalAmount, nil

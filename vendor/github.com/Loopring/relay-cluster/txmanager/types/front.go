@@ -20,9 +20,10 @@ package types
 
 import (
 	"encoding/json"
+
+	"github.com/ethereum/go-ethereum/common"
 	util "github.com/expanse-org/relay-lib/marketutil"
 	"github.com/expanse-org/relay-lib/types"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 type TransactionJsonResult struct {
@@ -175,8 +176,8 @@ func (r *TransactionJsonResult) FromFillEntity(entity *TransactionEntity) error 
 		FillIndex string `json:"fill_index"`
 		AmountS   string `json:"amount_s"`
 		AmountB   string `json:"amount_b"`
-		LrcReward string `json:"lrc_reward"`
-		LrcFee    string `json:"lrc_fee"`
+		PexReward string `json:"pex_reward"`
+		PexFee    string `json:"pex_fee"`
 		SplitS    string `json:"split_s"`
 		SplitB    string `json:"split_b"`
 		Market    string `json:"market"`
@@ -200,8 +201,8 @@ func (r *TransactionJsonResult) FromFillEntity(entity *TransactionEntity) error 
 	fill.FillIndex = content.FillIndex
 	fill.AmountS = content.AmountS
 	fill.AmountB = content.AmountB
-	fill.LrcReward = content.LrcReward
-	fill.LrcFee = content.LrcFee
+	fill.PexReward = content.PexReward
+	fill.PexFee = content.PexFee
 	fill.SplitS = content.SplitS
 	fill.SplitB = content.SplitB
 	fill.Market = content.Market

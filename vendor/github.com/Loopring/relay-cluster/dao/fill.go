@@ -20,9 +20,10 @@ package dao
 
 import (
 	"fmt"
-	"github.com/expanse-org/relay-lib/types"
-	"github.com/ethereum/go-ethereum/common"
 	"math/big"
+
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/expanse-org/relay-lib/types"
 )
 
 type FillEvent struct {
@@ -43,8 +44,8 @@ type FillEvent struct {
 	AmountB         string `gorm:"column:amount_b;type:varchar(40)" json:"amountB"`
 	TokenS          string `gorm:"column:token_s;type:varchar(42)" json:"tokenS"`
 	TokenB          string `gorm:"column:token_b;type:varchar(42)" json:"tokenB"`
-	LrcReward       string `gorm:"column:lrc_reward;type:varchar(40)" json:"lrcReward"`
-	LrcFee          string `gorm:"column:lrc_fee;type:varchar(40)" json:"lrcFee"`
+	PexReward       string `gorm:"column:pex_reward;type:varchar(40)" json:"pexReward"`
+	PexFee          string `gorm:"column:pex_fee;type:varchar(40)" json:"pexFee"`
 	SplitS          string `gorm:"column:split_s;type:varchar(40)" json:"splitS"`
 	SplitB          string `gorm:"column:split_b;type:varchar(40)" json:"splitB"`
 	Market          string `gorm:"column:market;type:varchar(42)" json:"market"`
@@ -58,8 +59,8 @@ type FillEvent struct {
 func (f *FillEvent) ConvertDown(src *types.OrderFilledEvent) error {
 	f.AmountS = src.AmountS.String()
 	f.AmountB = src.AmountB.String()
-	f.LrcReward = src.LrcReward.String()
-	f.LrcFee = src.LrcFee.String()
+	f.PexReward = src.PexReward.String()
+	f.PexFee = src.PexFee.String()
 	f.SplitS = src.SplitS.String()
 	f.SplitB = src.SplitB.String()
 	f.Protocol = src.Protocol.Hex()
@@ -86,8 +87,8 @@ func (f *FillEvent) ConvertDown(src *types.OrderFilledEvent) error {
 func (f *FillEvent) ConvertUp(dst *types.OrderFilledEvent) error {
 	dst.AmountS, _ = new(big.Int).SetString(f.AmountS, 0)
 	dst.AmountB, _ = new(big.Int).SetString(f.AmountB, 0)
-	dst.LrcReward, _ = new(big.Int).SetString(f.LrcReward, 0)
-	dst.LrcFee, _ = new(big.Int).SetString(f.LrcFee, 0)
+	dst.PexReward, _ = new(big.Int).SetString(f.PexReward, 0)
+	dst.PexFee, _ = new(big.Int).SetString(f.PexFee, 0)
 	dst.SplitS, _ = new(big.Int).SetString(f.SplitS, 0)
 	dst.SplitB, _ = new(big.Int).SetString(f.SplitB, 0)
 	dst.Protocol = common.HexToAddress(f.Protocol)

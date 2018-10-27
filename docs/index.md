@@ -22,7 +22,7 @@ The current implementation is a blending engine called timingmatcher. The execut
     #This project is written in the coding language Go. Make sure you have already configured Go.
     git clone https://github.com/expanse-org/miner.git
     cd miner
-    go build -o build/bin/miner cmd/lrc/*
+    go build -o build/bin/miner cmd/pex/*
     #The miner depends on therelay-cluster、extractor、mysql、redis、kafka、zookeeper、eth nodes, etc.
     build/bin/miner --unlocks="address1,address2" --passwords="pwd1,pwd2" --config=miner.toml
     ```

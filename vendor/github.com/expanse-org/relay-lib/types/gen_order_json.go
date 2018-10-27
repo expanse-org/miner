@@ -7,8 +7,8 @@ import (
 	"errors"
 	"math/big"
 
-	"github.com/expanse-org/relay-lib/crypto"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/expanse-org/relay-lib/crypto"
 )
 
 var _ = (*orderMarshaling)(nil)
@@ -27,7 +27,7 @@ func (o Order) MarshalJSON() ([]byte, error) {
 		AmountB               *Big                       `json:"amountB" gencodec:"required"`
 		ValidSince            *Big                       `json:"validSince" gencodec:"required"`
 		ValidUntil            *Big                       `json:"validUntil" gencodec:"required"`
-		LrcFee                *Big                       `json:"lrcFee" `
+		PexFee                *Big                       `json:"pexFee" `
 		BuyNoMoreThanAmountB  bool                       `json:"buyNoMoreThanAmountB" gencodec:"required"`
 		MarginSplitPercentage uint8                      `json:"marginSplitPercentage" gencodec:"required"`
 		V                     uint8                      `json:"v" gencodec:"required"`
@@ -56,7 +56,7 @@ func (o Order) MarshalJSON() ([]byte, error) {
 	enc.AmountB = (*Big)(o.AmountB)
 	enc.ValidSince = (*Big)(o.ValidSince)
 	enc.ValidUntil = (*Big)(o.ValidUntil)
-	enc.LrcFee = (*Big)(o.LrcFee)
+	enc.PexFee = (*Big)(o.PexFee)
 	enc.BuyNoMoreThanAmountB = o.BuyNoMoreThanAmountB
 	enc.MarginSplitPercentage = o.MarginSplitPercentage
 	enc.V = o.V
@@ -89,7 +89,7 @@ func (o *Order) UnmarshalJSON(input []byte) error {
 		AmountB               *Big                        `json:"amountB" gencodec:"required"`
 		ValidSince            *Big                        `json:"validSince" gencodec:"required"`
 		ValidUntil            *Big                        `json:"validUntil" gencodec:"required"`
-		LrcFee                *Big                        `json:"lrcFee" `
+		PexFee                *Big                        `json:"pexFee" `
 		BuyNoMoreThanAmountB  *bool                       `json:"buyNoMoreThanAmountB" gencodec:"required"`
 		MarginSplitPercentage *uint8                      `json:"marginSplitPercentage" gencodec:"required"`
 		V                     *uint8                      `json:"v" gencodec:"required"`
@@ -154,8 +154,8 @@ func (o *Order) UnmarshalJSON(input []byte) error {
 		return errors.New("missing required field 'validUntil' for Order")
 	}
 	o.ValidUntil = (*big.Int)(dec.ValidUntil)
-	if dec.LrcFee != nil {
-		o.LrcFee = (*big.Int)(dec.LrcFee)
+	if dec.PexFee != nil {
+		o.PexFee = (*big.Int)(dec.PexFee)
 	}
 	if dec.BuyNoMoreThanAmountB == nil {
 		return errors.New("missing required field 'buyNoMoreThanAmountB' for Order")

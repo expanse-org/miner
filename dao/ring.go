@@ -19,13 +19,14 @@
 package dao
 
 import (
-	"github.com/expanse-org/relay-lib/types"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/jinzhu/gorm"
 	"errors"
 	"math/big"
 	"time"
+
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/expanse-org/relay-lib/log"
+	"github.com/expanse-org/relay-lib/types"
+	"github.com/jinzhu/gorm"
 )
 
 type FilledOrder struct {
@@ -38,8 +39,8 @@ type FilledOrder struct {
 	AvailableAmountB string `gorm:"column:available_amount_b;type:text"`
 	FillAmountS      string `gorm:"column:fill_amount_s;type:text" json:"fillAmountS"`
 	FillAmountB      string `gorm:"column:fill_amount_b;type:text" json:"fillAmountB"`
-	LrcReward        string `gorm:"column:lrc_reward;type:text" json:"lrcReward"`
-	LrcFee           string `gorm:"column:lrc_fee;type:text" json:"lrcFee"`
+	PexReward        string `gorm:"column:pex_reward;type:text" json:"pexReward"`
+	PexFee           string `gorm:"column:pex_fee;type:text" json:"pexFee"`
 	FeeS             string `gorm:"column:fee_s;type:text" json:"feeS"`
 	LegalFee         string `gorm:"column:legal_fee;type:text" json:"legalFee"`
 	SPrice           string `gorm:"column:s_price;type:text" json:"sPrice"`
@@ -63,8 +64,8 @@ func (daoFilledOrder *FilledOrder) ConvertDown(filledOrder *types.FilledOrder, r
 	daoFilledOrder.AvailableAmountB = getRatString(filledOrder.AvailableAmountB)
 	daoFilledOrder.FillAmountS = getRatString(filledOrder.FillAmountS)
 	daoFilledOrder.FillAmountB = getRatString(filledOrder.FillAmountB)
-	daoFilledOrder.LrcReward = getRatString(filledOrder.LrcReward)
-	daoFilledOrder.LrcFee = getRatString(filledOrder.LrcFee)
+	daoFilledOrder.PexReward = getRatString(filledOrder.PexReward)
+	daoFilledOrder.PexFee = getRatString(filledOrder.PexFee)
 	daoFilledOrder.FeeS = getRatString(filledOrder.FeeS)
 	daoFilledOrder.LegalFee = getRatString(filledOrder.LegalFee)
 	daoFilledOrder.SPrice = getRatString(filledOrder.SPrice)
@@ -93,10 +94,10 @@ func (daoFilledOrder *FilledOrder) ConvertUp(filledOrder *types.FilledOrder, rds
 	filledOrder.FillAmountB = new(big.Rat)
 	filledOrder.FillAmountS.SetString(daoFilledOrder.FillAmountS)
 	filledOrder.FillAmountB.SetString(daoFilledOrder.FillAmountB)
-	filledOrder.LrcReward = new(big.Rat)
-	filledOrder.LrcFee = new(big.Rat)
-	filledOrder.LrcReward.SetString(daoFilledOrder.LrcReward)
-	filledOrder.LrcFee.SetString(daoFilledOrder.LrcFee)
+	filledOrder.PexReward = new(big.Rat)
+	filledOrder.PexFee = new(big.Rat)
+	filledOrder.PexReward.SetString(daoFilledOrder.PexReward)
+	filledOrder.PexFee.SetString(daoFilledOrder.PexFee)
 	filledOrder.FeeS = new(big.Rat)
 	filledOrder.FeeS.SetString(daoFilledOrder.FeeS)
 	filledOrder.LegalFee = new(big.Rat)
@@ -242,18 +243,18 @@ func (s *RdsServiceImpl) HasReSubmited(createTime int64, miner string, txNonce u
 	t := big.NewInt(createTime)
 	count := 0
 	err := s.Db.Model(&RingSubmitInfo{}).Where("UNIX_TIMESTAMP(create_time) > ? and miner = ? and tx_nonce = ?", t.String(), miner, txNonce).Count(&count).Error
-	return (count>0),err
+	return (count > 0), err
 }
 func (s *RdsServiceImpl) GetPendingTx(createTime int64) (ringForSubmits []RingSubmitInfo, err error) {
 	ringForSubmits = []RingSubmitInfo{}
 	t := big.NewInt(createTime)
 	if err := s.Db.Raw("select infos.* from lpr_ring_submit_infos as infos " +
-	" join " +
-	" (select miner, max(tx_nonce) blockedNonce from lpr_ring_submit_infos  where status in (2,3) group by miner) as blockedNonces on blockedNonces.miner=infos.miner and status = 1 " +
-	"	and infos.tx_nonce > blockedNonces.blockedNonce and UNIX_TIMESTAMP(create_time) < " + t.String() + " order by infos.tx_nonce").Scan(&ringForSubmits).Error;nil != err {
+		" join " +
+		" (select miner, max(tx_nonce) blockedNonce from lpr_ring_submit_infos  where status in (2,3) group by miner) as blockedNonces on blockedNonces.miner=infos.miner and status = 1 " +
+		"	and infos.tx_nonce > blockedNonces.blockedNonce and UNIX_TIMESTAMP(create_time) < " + t.String() + " order by infos.tx_nonce").Scan(&ringForSubmits).Error; nil != err {
 		log.Errorf("err:%s", err.Error())
 	}
-			//minerBlockedNonces := []map[string]interface{}{}
+	//minerBlockedNonces := []map[string]interface{}{}
 	//if err = s.Db.Raw("select " +
 	//	"miner, " +
 	//	"max(tx_nonce) blockedNonce " +
@@ -308,12 +309,12 @@ func (s *RdsServiceImpl) UpdateRingSubmitInfoErrById(id int, err error) error {
 	return dbForUpdate.Update("err", err.Error()).Error
 }
 
-func (s *RdsServiceImpl) GetSubmitterNonce(submitter string) (uint64,error) {
+func (s *RdsServiceImpl) GetSubmitterNonce(submitter string) (uint64, error) {
 	nonce := []uint64{}
 	println(submitter)
 	err := s.Db.Model(&RingSubmitInfo{}).Where("miner=?", submitter).Pluck(" max(tx_nonce) ", &nonce).Error
 	if len(nonce) > 0 {
-		return nonce[0]+1,err
+		return nonce[0] + 1, err
 	} else {
 		return 0, err
 	}

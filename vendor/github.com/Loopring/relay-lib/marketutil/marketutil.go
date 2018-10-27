@@ -22,15 +22,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/expanse-org/relay-lib/eventemitter"
-	"github.com/expanse-org/relay-lib/log"
-	"github.com/expanse-org/relay-lib/types"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/robfig/cron"
 	"io/ioutil"
 	"math/big"
 	"os"
 	"strings"
+
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/expanse-org/relay-lib/eventemitter"
+	"github.com/expanse-org/relay-lib/log"
+	"github.com/expanse-org/relay-lib/types"
+	"github.com/robfig/cron"
 )
 
 const SideSell = "sell"
@@ -41,7 +42,7 @@ type TokenPair struct {
 	TokenB common.Address
 }
 
-var MarketBaseOrder = map[string]uint8{"BAR": 5, "LRC": 10, "WEXP": 20, "USDT": 30, "TUSD": 40}
+var MarketBaseOrder = map[string]uint8{"BAR": 5, "PEX": 10, "WEXP": 20, "USDT": 30, "TUSD": 40}
 
 type TokenStandard uint8
 
@@ -166,7 +167,7 @@ func getTokenAndMarketFromDB(tokenfile string) (
 	}
 
 	// set all markets
-	for k := range allTokens { // lrc,omg
+	for k := range allTokens { // pex,omg
 		for kk := range supportMarkets { //eth
 			o, ok := MarketBaseOrder[k]
 			if ok {

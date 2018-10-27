@@ -23,7 +23,7 @@ type TxType uint8
 const (
 	SYMBOL_EXP  = "EXP"
 	SYMBOL_WEXP = "WEXP"
-	SYMBOL_LRC  = "LRC"
+	SYMBOL_PEX  = "PEX"
 )
 
 // send/receive/sell/buy/wrap/unwrap/cancelOrder/approve
@@ -41,8 +41,8 @@ const (
 	TX_TYPE_CUTOFF               TxType = 10
 	TX_TYPE_CUTOFF_PAIR          TxType = 11
 	TX_TYPE_UNSUPPORTED_CONTRACT TxType = 12
-	TX_TYPE_LRC_FEE              TxType = 13
-	TX_TYPE_LRC_REWARD           TxType = 14
+	TX_TYPE_PEX_FEE              TxType = 13
+	TX_TYPE_PEX_REWARD           TxType = 14
 )
 
 func TypeStr(typ TxType) string {
@@ -71,10 +71,10 @@ func TypeStr(typ TxType) string {
 		ret = "cutoff_trading_pair"
 	case TX_TYPE_UNSUPPORTED_CONTRACT:
 		ret = "unsupported_contract"
-	case TX_TYPE_LRC_FEE:
-		ret = "lrc_fee"
-	case TX_TYPE_LRC_REWARD:
-		ret = "lrc_reward"
+	case TX_TYPE_PEX_FEE:
+		ret = "pex_fee"
+	case TX_TYPE_PEX_REWARD:
+		ret = "pex_reward"
 	default:
 		ret = "unknown"
 	}
@@ -107,10 +107,10 @@ func StrToTxType(typ string) TxType {
 		ret = TX_TYPE_CUTOFF_PAIR
 	case "unsupported_contract":
 		ret = TX_TYPE_UNSUPPORTED_CONTRACT
-	case "lrc_fee":
-		ret = TX_TYPE_LRC_FEE
-	case "lrc_reward":
-		ret = TX_TYPE_LRC_REWARD
+	case "pex_fee":
+		ret = TX_TYPE_PEX_FEE
+	case "pex_reward":
+		ret = TX_TYPE_PEX_REWARD
 	default:
 		ret = TX_TYPE_UNKNOWN
 	}

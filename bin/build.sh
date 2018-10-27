@@ -22,5 +22,5 @@ fi
 cd $SRC_DIR
 rm -rf ./*
 cp -r $WORK_DIR/src/* ./
-go build -ldflags -s -v  -o build/bin/miner cmd/lrc/*
+go build -ldflags -s -v  -o build/bin/miner cmd/pex/*
 cp build/bin/miner $WORK_DIR/bin/

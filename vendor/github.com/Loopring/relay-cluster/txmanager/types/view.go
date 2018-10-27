@@ -20,10 +20,11 @@ package types
 
 import (
 	"fmt"
+	"math/big"
+
+	"github.com/ethereum/go-ethereum/common"
 	util "github.com/expanse-org/relay-lib/marketutil"
 	"github.com/expanse-org/relay-lib/types"
-	"github.com/ethereum/go-ethereum/common"
-	"math/big"
 )
 
 type TransactionView struct {
@@ -210,7 +211,7 @@ func EthTransferView(src *types.EthTransferEvent) ([]TransactionView, error) {
 	return list, nil
 }
 
-// 用户币种最多3个tokenS,tokenB,lrc
+// 用户币种最多3个tokenS,tokenB,pex
 // 一个fill只有一个owner,我们这里最多存储3条数据
 func OrderFilledView(src *types.OrderFilledEvent) ([]TransactionView, error) {
 	var (
@@ -224,9 +225,9 @@ func OrderFilledView(src *types.OrderFilledEvent) ([]TransactionView, error) {
 		totalAmountS := big.NewInt(0)
 		totalAmountS = new(big.Int).Add(totalAmountS, src.AmountS)
 		totalAmountS = new(big.Int).Add(totalAmountS, src.SplitS)
-		if symbolS == SYMBOL_LRC {
-			totalAmountS = new(big.Int).Add(totalAmountS, src.LrcFee)
-			totalAmountS = new(big.Int).Sub(totalAmountS, src.LrcReward)
+		if symbolS == SYMBOL_PEX {
+			totalAmountS = new(big.Int).Add(totalAmountS, src.PexFee)
+			totalAmountS = new(big.Int).Sub(totalAmountS, src.PexReward)
 		}
 
 		var tx TransactionView
@@ -245,9 +246,9 @@ func OrderFilledView(src *types.OrderFilledEvent) ([]TransactionView, error) {
 		totalAmountB := big.NewInt(0)
 		totalAmountB = new(big.Int).Add(totalAmountB, src.AmountB)
 		totalAmountB = new(big.Int).Sub(totalAmountB, src.SplitB)
-		if symbolB == SYMBOL_LRC {
-			totalAmountB = new(big.Int).Add(totalAmountB, src.LrcReward)
-			totalAmountB = new(big.Int).Sub(totalAmountB, src.LrcFee)
+		if symbolB == SYMBOL_PEX {
+			totalAmountB = new(big.Int).Add(totalAmountB, src.PexReward)
+			totalAmountB = new(big.Int).Sub(totalAmountB, src.PexFee)
 		}
 
 		var tx TransactionView
@@ -261,22 +262,22 @@ func OrderFilledView(src *types.OrderFilledEvent) ([]TransactionView, error) {
 		list = append(list, tx)
 	}
 
-	// lrcReward&lrcFee只会有一个大于0
-	if symbolS != SYMBOL_LRC && symbolB != SYMBOL_LRC {
+	// pexReward&pexFee只会有一个大于0
+	if symbolS != SYMBOL_PEX && symbolB != SYMBOL_PEX {
 		var tx TransactionView
 		if err := tx.fullFilled(src.TxInfo); err != nil {
 			return list, err
 		}
 		tx.Owner = src.Owner
-		tx.Symbol = SYMBOL_LRC
+		tx.Symbol = SYMBOL_PEX
 
-		if src.LrcFee.Cmp(big.NewInt(0)) > 0 {
-			tx.Type = TX_TYPE_LRC_FEE
-			tx.Amount = src.LrcFee
+		if src.PexFee.Cmp(big.NewInt(0)) > 0 {
+			tx.Type = TX_TYPE_PEX_FEE
+			tx.Amount = src.PexFee
 			list = append(list, tx)
-		} else if src.LrcReward.Cmp(big.NewInt(0)) > 0 {
-			tx.Type = TX_TYPE_LRC_REWARD
-			tx.Amount = src.LrcReward
+		} else if src.PexReward.Cmp(big.NewInt(0)) > 0 {
+			tx.Type = TX_TYPE_PEX_REWARD
+			tx.Amount = src.PexReward
 			list = append(list, tx)
 		}
 	}

@@ -21,10 +21,11 @@ package types
 import (
 	"encoding/json"
 	"fmt"
+	"math/big"
+
+	"github.com/ethereum/go-ethereum/common"
 	util "github.com/expanse-org/relay-lib/marketutil"
 	"github.com/expanse-org/relay-lib/types"
-	"github.com/ethereum/go-ethereum/common"
-	"math/big"
 )
 
 type TransactionEntity struct {
@@ -92,8 +93,8 @@ type OrderFilledContent struct {
 	RingIndex string `json:"ring_index"`
 	AmountS   string `json:"amount_s"`
 	AmountB   string `json:"amount_b"`
-	LrcReward string `json:"lrc_reward"`
-	LrcFee    string `json:"lrc_fee"`
+	PexReward string `json:"pex_reward"`
+	PexFee    string `json:"pex_fee"`
 	SplitS    string `json:"split_s"`
 	SplitB    string `json:"split_b"`
 	Market    string `json:"market"`
@@ -253,8 +254,8 @@ func (tx *TransactionEntity) FromOrderFilledEvent(src *types.OrderFilledEvent) e
 	content.RingIndex = src.RingIndex.String()
 	content.AmountS = src.AmountS.String()
 	content.AmountB = src.AmountB.String()
-	content.LrcReward = src.LrcReward.String()
-	content.LrcFee = src.LrcFee.String()
+	content.PexReward = src.PexReward.String()
+	content.PexFee = src.PexFee.String()
 	content.SplitS = src.SplitS.String()
 	content.SplitB = src.SplitB.String()
 	content.Market, _ = util.WrapMarketByAddress(src.TokenB.Hex(), src.TokenS.Hex())
