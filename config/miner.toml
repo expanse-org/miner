@@ -70,7 +70,7 @@ title = "miner"
     		max_sumit_failed_count = 3
 
 [keystore]
-    keydir = "miner/ks_dir"
+    keydir = "config/keystore"
 
 [market_cap]
         base_url = "https://api.coinmarketcap.com/v1/ticker/?limit=0&convert=%s"

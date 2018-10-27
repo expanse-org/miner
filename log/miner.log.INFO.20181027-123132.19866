@@ -1,0 +1,7 @@
+Log file created at: 2018/10/27 12:31:32
+Running on machine: wallet
+Binary: Built with gc go1.9.4 for linux/amd64
+Log line format: [IWEF]mmdd hh:mm:ss.uuuuuu threadid file:line] msg
+I1027 12:31:32.491215   19866 zkRegistry.go:206] start subscribe service. url:motan2://:0/io.loopring.relay-cluster.gateway.MotanService?group=motan-demo-rpc
+I1027 12:31:33.491851   19866 zkRegistry.go:245] zk Subscribe err zk: could not connect to a server
+I1027 12:31:33.498664   19866 zkRegistry.go:286] zookeeper subscribe command of motan2://:0/io.loopring.relay-cluster.gateway.MotanService?group=motan-demo-rpc
