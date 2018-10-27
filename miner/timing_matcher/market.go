@@ -329,7 +329,7 @@ func (market *Market) reduceAmountAfterFilled(filledOrder *types.FilledOrder) *t
 
 func (market *Market) GenerateCandidateRing(orders ...*types.OrderState) (*CandidateRing, error) {
 	filledOrders := []*types.FilledOrder{}
-	//miner will received nothing, if miner set FeeSelection=1 and he doesn't have enough lrc
+	//miner will received nothing, if miner set FeeSelection=1 and he doesn't have enough pex
 	for _, order := range orders {
 		if filledOrder, err := market.generateFilledOrder(order); nil != err {
 			log.Errorf("err:%s", err.Error())
@@ -354,7 +354,7 @@ func (market *Market) GenerateCandidateRing(orders ...*types.OrderState) (*Candi
 
 func (market *Market) generateFilledOrder(order *types.OrderState) (*types.FilledOrder, error) {
 
-	lrcTokenBalance, err := market.matcher.GetAccountAvailableAmount(order.RawOrder.Owner, market.protocolImpl.LrcTokenAddress, market.protocolImpl.DelegateAddress)
+	pexTokenBalance, err := market.matcher.GetAccountAvailableAmount(order.RawOrder.Owner, market.protocolImpl.PexTokenAddress, market.protocolImpl.DelegateAddress)
 	if nil != err {
 		return nil, err
 	}
@@ -370,12 +370,12 @@ func (market *Market) generateFilledOrder(order *types.OrderState) (*types.Fille
 	if market.isDustValue(order.RawOrder.TokenS, tokenSBalance) {
 		return nil, fmt.Errorf("owner:%s token:%s balance or allowance is not enough", order.RawOrder.Owner.Hex(), order.RawOrder.TokenS.Hex())
 	}
-	return types.ConvertOrderStateToFilledOrder(*order, lrcTokenBalance, tokenSBalance, market.protocolImpl.LrcTokenAddress), nil
+	return types.ConvertOrderStateToFilledOrder(*order, pexTokenBalance, tokenSBalance, market.protocolImpl.PexTokenAddress), nil
 }
 
 func (market *Market) generateRingSubmitInfo(orders ...*types.OrderState) (*types.RingSubmitInfo, error) {
 	filledOrders := []*types.FilledOrder{}
-	//miner will received nothing, if miner set FeeSelection=1 and he doesn't have enough lrc
+	//miner will received nothing, if miner set FeeSelection=1 and he doesn't have enough pex
 	for _, order := range orders {
 		if filledOrder, err := market.generateFilledOrder(order); nil != err {
 			log.Errorf("err:%s", err.Error())

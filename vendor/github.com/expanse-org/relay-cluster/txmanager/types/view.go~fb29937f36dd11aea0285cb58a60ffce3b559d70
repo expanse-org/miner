@@ -20,10 +20,11 @@ package types
 
 import (
 	"fmt"
+	"math/big"
+
+	"github.com/ethereum/go-ethereum/common"
 	util "github.com/expanse-org/relay-lib/marketutil"
 	"github.com/expanse-org/relay-lib/types"
-	"github.com/ethereum/go-ethereum/common"
-	"math/big"
 )
 
 type TransactionView struct {

@@ -20,9 +20,10 @@ package types
 
 import (
 	"encoding/json"
+
+	"github.com/ethereum/go-ethereum/common"
 	util "github.com/expanse-org/relay-lib/marketutil"
 	"github.com/expanse-org/relay-lib/types"
-	"github.com/ethereum/go-ethereum/common"
 )
 
 type TransactionJsonResult struct {

@@ -37,8 +37,8 @@ type FilledOrder struct {
 	AvailableAmountB string `gorm:"column:available_amount_b;type:text"`
 	FillAmountS      string `gorm:"column:fill_amount_s;type:text" json:"fillAmountS"`
 	FillAmountB      string `gorm:"column:fill_amount_b;type:text" json:"fillAmountB"`
-	LrcReward        string `gorm:"column:lrc_reward;type:text" json:"lrcReward"`
-	LrcFee           string `gorm:"column:lrc_fee;type:text" json:"lrcFee"`
+	PexReward        string `gorm:"column:pex_reward;type:text" json:"pexReward"`
+	PexFee           string `gorm:"column:pex_fee;type:text" json:"pexFee"`
 	FeeS             string `gorm:"column:fee_s;type:text" json:"feeS"`
 	LegalFee         string `gorm:"column:legal_fee;type:text" json:"legalFee"`
 	SPrice           string `gorm:"column:s_price;type:text" json:"sPrice"`
@@ -62,8 +62,8 @@ func (daoFilledOrder *FilledOrder) ConvertDown(filledOrder *types.FilledOrder, r
 	daoFilledOrder.AvailableAmountB = getRatString(filledOrder.AvailableAmountB)
 	daoFilledOrder.FillAmountS = getRatString(filledOrder.FillAmountS)
 	daoFilledOrder.FillAmountB = getRatString(filledOrder.FillAmountB)
-	daoFilledOrder.LrcReward = getRatString(filledOrder.LrcReward)
-	daoFilledOrder.LrcFee = getRatString(filledOrder.LrcFee)
+	daoFilledOrder.PexReward = getRatString(filledOrder.PexReward)
+	daoFilledOrder.PexFee = getRatString(filledOrder.PexFee)
 	daoFilledOrder.FeeS = getRatString(filledOrder.FeeS)
 	daoFilledOrder.LegalFee = getRatString(filledOrder.LegalFee)
 	daoFilledOrder.SPrice = getRatString(filledOrder.SPrice)
@@ -92,10 +92,10 @@ func (daoFilledOrder *FilledOrder) ConvertUp(filledOrder *types.FilledOrder, rds
 	filledOrder.FillAmountB = new(big.Rat)
 	filledOrder.FillAmountS.SetString(daoFilledOrder.FillAmountS)
 	filledOrder.FillAmountB.SetString(daoFilledOrder.FillAmountB)
-	filledOrder.LrcReward = new(big.Rat)
-	filledOrder.LrcFee = new(big.Rat)
-	filledOrder.LrcReward.SetString(daoFilledOrder.LrcReward)
-	filledOrder.LrcFee.SetString(daoFilledOrder.LrcFee)
+	filledOrder.PexReward = new(big.Rat)
+	filledOrder.PexFee = new(big.Rat)
+	filledOrder.PexReward.SetString(daoFilledOrder.PexReward)
+	filledOrder.PexFee.SetString(daoFilledOrder.PexFee)
 	filledOrder.FeeS = new(big.Rat)
 	filledOrder.FeeS.SetString(daoFilledOrder.FeeS)
 	filledOrder.LegalFee = new(big.Rat)

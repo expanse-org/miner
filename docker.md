@@ -19,7 +19,7 @@ make relay
    --ringMaxLength, --rml,              the max length of ring
    --miner,                             the encrypted private key used to sign ring
    --feeRecepient, -r,                  the fee recepient address when mined a ring
-   --throwIfLrcIsInsuffcient, -t        the contract will revert when the lrc is insuffcient if it set ture
+   --throwIfPexIsInsuffcient, -t        the contract will revert when the pex is insuffcient if it set ture
    --help, -h                           show help
 
 
@@ -101,5 +101,5 @@ While sync finished, before relay start, make sure default_block_number in relay
 
 **tokens.json file**
 tokens.json file listed tokens and markets those exchanges want to support.
-you can combine markets like WEXP-LRC
+you can combine markets like WEXP-PEX
 

@@ -514,32 +514,32 @@ func (submitter *RingSubmitter) selectSenderAddress() (common.Address, error) {
 //	ringState.LegalFee = new(big.Rat).SetInt(big.NewInt(int64(0)))
 //	ethPrice, _ := submitter.marketCapProvider.GetEthCap()
 //	ethPrice = ethPrice.Quo(ethPrice, new(big.Rat).SetInt(util.AllTokens["WEXP"].Decimals))
-//	lrcAddress := loopringaccessor.ProtocolAddresses()[ringSubmitInfo.ProtocolAddress].LrcTokenAddress
+//	pexAddress := loopringaccessor.ProtocolAddresses()[ringSubmitInfo.ProtocolAddress].PexTokenAddress
 //	spenderAddress := loopringaccessor.ProtocolAddresses()[ringSubmitInfo.ProtocolAddress].DelegateAddress
 //	useSplit := false
 //	//for _,splitMiner := range submitter.splitMinerAddresses {
 //	//	//todo:optimize it
-//	//	if lrcFee > splitMiner.StartFee || splitFee > splitMiner.StartFee || len(submitter.normalMinerAddresses) <= 0  {
+//	//	if pexFee > splitMiner.StartFee || splitFee > splitMiner.StartFee || len(submitter.normalMinerAddresses) <= 0  {
 //	//		useSplit = true
 //	//		ringState.Miner = splitMiner.Address
-//	//		minerLrcBalance, _ := submitter.matcher.GetAccountAvailableAmount(splitMiner.Address, lrcAddress)
-//	//		//the lrcreward should be send to order.owner when miner selects MarginSplit as the selection of fee
-//	//		//be careful！！！ miner will received nothing, if miner set FeeSelection=1 and he doesn't have enough lrc
+//	//		minerPexBalance, _ := submitter.matcher.GetAccountAvailableAmount(splitMiner.Address, pexAddress)
+//	//		//the pexreward should be send to order.owner when miner selects MarginSplit as the selection of fee
+//	//		//be careful！！！ miner will received nothing, if miner set FeeSelection=1 and he doesn't have enough pex
 //	//
 //	//
-//	//		if ringState.LrcLegalFee.Cmp(ringState.SplitLegalFee) < 0 && minerLrcBalance.Cmp(filledOrder.LrcFee) > 0 {
+//	//		if ringState.PexLegalFee.Cmp(ringState.SplitLegalFee) < 0 && minerPexBalance.Cmp(filledOrder.PexFee) > 0 {
 //	//			filledOrder.FeeSelection = 1
 //	//			splitPer := new(big.Rat).SetInt64(int64(filledOrder.OrderState.RawOrder.MarginSplitPercentage))
 //	//			legalAmountOfSaving.Mul(legalAmountOfSaving, splitPer)
-//	//			filledOrder.LrcReward = legalAmountOfLrc
-//	//			legalAmountOfSaving.Sub(legalAmountOfSaving, legalAmountOfLrc)
+//	//			filledOrder.PexReward = legalAmountOfPex
+//	//			legalAmountOfSaving.Sub(legalAmountOfSaving, legalAmountOfPex)
 //	//			filledOrder.LegalFee = legalAmountOfSaving
 //	//
-//	//			minerLrcBalance.Sub(minerLrcBalance, filledOrder.LrcFee)
-//	//			//log.Debugf("Miner,lrcReward:%s  legalFee:%s", lrcReward.FloatString(10), filledOrder.LegalFee.FloatString(10))
+//	//			minerPexBalance.Sub(minerPexBalance, filledOrder.PexFee)
+//	//			//log.Debugf("Miner,pexReward:%s  legalFee:%s", pexReward.FloatString(10), filledOrder.LegalFee.FloatString(10))
 //	//		} else {
 //	//			filledOrder.FeeSelection = 0
-//	//			filledOrder.LegalFee = legalAmountOfLrc
+//	//			filledOrder.LegalFee = legalAmountOfPex
 //	//		}
 //	//
 //	//		ringState.LegalFee.Add(ringState.LegalFee, filledOrder.LegalFee)
@@ -548,30 +548,30 @@ func (submitter *RingSubmitter) selectSenderAddress() (common.Address, error) {
 //	minerAddresses := submitter.availableSenderAddresses()
 //	if !useSplit {
 //		for _, normalMinerAddress := range minerAddresses {
-//			minerLrcBalance, _ := submitter.matcher.GetAccountAvailableAmount(normalMinerAddress.Address, lrcAddress, spenderAddress)
+//			minerPexBalance, _ := submitter.matcher.GetAccountAvailableAmount(normalMinerAddress.Address, pexAddress, spenderAddress)
 //			legalFee := new(big.Rat).SetInt(big.NewInt(int64(0)))
 //			feeSelections := []uint8{}
 //			legalFees := []*big.Rat{}
-//			lrcRewards := []*big.Rat{}
+//			pexRewards := []*big.Rat{}
 //			for _, filledOrder := range ringState.Orders {
-//				lrcFee := new(big.Rat).SetInt(big.NewInt(int64(2)))
-//				lrcFee.Mul(lrcFee, filledOrder.LegalLrcFee)
-//				log.Debugf("lrcFee:%s, filledOrder.LegalFeeS:%s, minerLrcBalance:%s, filledOrder.LrcFee:%s", lrcFee.FloatString(3), filledOrder.LegalFeeS.FloatString(3), minerLrcBalance.FloatString(3), filledOrder.LrcFee.FloatString(3))
-//				if lrcFee.Cmp(filledOrder.LegalFeeS) < 0 && minerLrcBalance.Cmp(filledOrder.LrcFee) > 0 {
+//				pexFee := new(big.Rat).SetInt(big.NewInt(int64(2)))
+//				pexFee.Mul(pexFee, filledOrder.LegalPexFee)
+//				log.Debugf("pexFee:%s, filledOrder.LegalFeeS:%s, minerPexBalance:%s, filledOrder.PexFee:%s", pexFee.FloatString(3), filledOrder.LegalFeeS.FloatString(3), minerPexBalance.FloatString(3), filledOrder.PexFee.FloatString(3))
+//				if pexFee.Cmp(filledOrder.LegalFeeS) < 0 && minerPexBalance.Cmp(filledOrder.PexFee) > 0 {
 //					feeSelections = append(feeSelections, 1)
 //					fee := new(big.Rat).Set(filledOrder.LegalFeeS)
-//					fee.Sub(fee, filledOrder.LegalLrcFee)
+//					fee.Sub(fee, filledOrder.LegalPexFee)
 //					legalFees = append(legalFees, fee)
-//					lrcRewards = append(lrcRewards, filledOrder.LegalLrcFee)
+//					pexRewards = append(pexRewards, filledOrder.LegalPexFee)
 //					legalFee.Add(legalFee, fee)
 //
-//					minerLrcBalance.Sub(minerLrcBalance, filledOrder.LrcFee)
-//					//log.Debugf("Miner,lrcReward:%s  legalFee:%s", lrcReward.FloatString(10), filledOrder.LegalFee.FloatString(10))
+//					minerPexBalance.Sub(minerPexBalance, filledOrder.PexFee)
+//					//log.Debugf("Miner,pexReward:%s  legalFee:%s", pexReward.FloatString(10), filledOrder.LegalFee.FloatString(10))
 //				} else {
 //					feeSelections = append(feeSelections, 0)
-//					legalFees = append(legalFees, filledOrder.LegalLrcFee)
-//					lrcRewards = append(lrcRewards, new(big.Rat).SetInt(big.NewInt(int64(0))))
-//					legalFee.Add(legalFee, filledOrder.LegalLrcFee)
+//					legalFees = append(legalFees, filledOrder.LegalPexFee)
+//					pexRewards = append(pexRewards, new(big.Rat).SetInt(big.NewInt(int64(0))))
+//					legalFee.Add(legalFee, filledOrder.LegalPexFee)
 //				}
 //			}
 //
@@ -581,7 +581,7 @@ func (submitter *RingSubmitter) selectSenderAddress() (common.Address, error) {
 //				for idx, filledOrder := range ringState.Orders {
 //					filledOrder.FeeSelection = feeSelections[idx]
 //					filledOrder.LegalFee = legalFees[idx]
-//					filledOrder.LrcReward = lrcRewards[idx]
+//					filledOrder.PexReward = pexRewards[idx]
 //				}
 //
 //				if nil == ringSubmitInfo.ProtocolGasPrice || ringSubmitInfo.ProtocolGasPrice.Cmp(normalMinerAddress.GasPriceLimit) > 0 {

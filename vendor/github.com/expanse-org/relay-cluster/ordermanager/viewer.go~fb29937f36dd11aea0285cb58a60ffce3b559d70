@@ -1,13 +1,14 @@
 package ordermanager
 
 import (
+	"math/big"
+
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/expanse-org/relay-cluster/dao"
 	"github.com/expanse-org/relay-cluster/usermanager"
 	"github.com/expanse-org/relay-lib/log"
 	"github.com/expanse-org/relay-lib/marketcap"
 	"github.com/expanse-org/relay-lib/types"
-	"github.com/ethereum/go-ethereum/common"
-	"math/big"
 )
 
 type OrderViewer interface {

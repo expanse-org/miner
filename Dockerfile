@@ -6,7 +6,7 @@ RUN mkdir /opt /opt/loopring /opt/loopring/miner /opt/loopring/miner/keystore /o
 ENV WORKSPACE=$GOPATH/src/github.com/expanse-org/miner
 ADD . $WORKSPACE
 
-RUN cd $WORKSPACE && go build -ldflags -s -v  -o build/bin/miner cmd/lrc/*
+RUN cd $WORKSPACE && go build -ldflags -s -v  -o build/bin/miner cmd/pex/*
 RUN mv $WORKSPACE/build/bin/miner /$GOPATH/bin
 
 ENTRYPOINT ["miner"]

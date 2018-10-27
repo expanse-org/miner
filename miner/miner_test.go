@@ -46,9 +46,9 @@ import ()
 //
 //	sendMethod := ethaccessor.ContractSendTransactionMethod("latest", ethaccessor.Erc20Abi(), common.HexToAddress("0xef68e7c694f40c8202821edf525de3782458639f"))
 //
-//	lrcAmount := new(big.Int)
-//	lrcAmount.SetString("100000000000000000000", 10)
-//	if txHash, err := sendMethod(sender.Address, "approve", big.NewInt(int64(1000000)), big.NewInt(int64(15000000000)), big.NewInt(int64(0)), common.HexToAddress("0x17233e07c67d086464fD408148c3ABB56245FA64"), lrcAmount); nil != err {
+//	pexAmount := new(big.Int)
+//	pexAmount.SetString("100000000000000000000", 10)
+//	if txHash, err := sendMethod(sender.Address, "approve", big.NewInt(int64(1000000)), big.NewInt(int64(15000000000)), big.NewInt(int64(0)), common.HexToAddress("0x17233e07c67d086464fD408148c3ABB56245FA64"), pexAmount); nil != err {
 //	} else {
 //		t.Logf("have send addParticipant transaction with hash:%s, you can see this in etherscan.io.\n", txHash)
 //	}
@@ -119,7 +119,7 @@ import ()
 //	//c := test.Cfg()
 //	entity := test.Entity()
 //
-//	lrc := util.SupportTokens["LRC"].Protocol
+//	pex := util.SupportTokens["PEX"].Protocol
 //
 //	eth := util.SupportMarkets["WEXP"].Protocol
 //
@@ -132,20 +132,20 @@ import ()
 //	db.Prepare()
 //	// set order and marshal to json
 //	//protocol := common.HexToAddress(c.Common.ProtocolImpl.Address[test.Version])
-//	lrcFee1 := new(big.Int).Mul(big.NewInt(1e18), big.NewInt(5)) // 20个lrc
+//	pexFee1 := new(big.Int).Mul(big.NewInt(1e18), big.NewInt(5)) // 20个pex
 //	for i := 0; i < 20; i++ {
 //
-//		// 卖出0.1个eth， 买入300个lrc,lrcFee为20个lrc
+//		// 卖出0.1个eth， 买入300个pex,pexFee为20个pex
 //		amountS1, _ := new(big.Int).SetString("10"+suffix, 0)
 //		amountB1, _ := new(big.Int).SetString("1000"+suffix, 0)
-//		lrcFee1.Add(lrcFee1, big.NewInt(int64(1)))
+//		pexFee1.Add(pexFee1, big.NewInt(int64(1)))
 //		order1 := test.CreateOrder(
 //			eth,
-//			lrc,
+//			pex,
 //			account1.Address,
 //			amountS1,
 //			amountB1,
-//			lrcFee1,
+//			pexFee1,
 //		)
 //		order1.Price = new(big.Rat).SetFrac(order1.AmountS, order1.AmountB)
 //		//bs1, _ := order1.MarshalJSON()
@@ -157,19 +157,19 @@ import ()
 //			t.Fatalf("err:%s", err.Error())
 //		}
 //
-//		// 卖出1000个lrc,买入0.1个eth,lrcFee为20个lrc
+//		// 卖出1000个pex,买入0.1个eth,pexFee为20个pex
 //		amountS2, _ := new(big.Int).SetString("1000"+suffix, 0)
 //		amountB2, _ := new(big.Int).SetString("10"+suffix, 0)
-//		//lrcFee2 := new(big.Int).Mul(big.NewInt(1e18), big.NewInt(3))
-//		lrcFee1.Add(lrcFee1, big.NewInt(int64(1)))
+//		//pexFee2 := new(big.Int).Mul(big.NewInt(1e18), big.NewInt(3))
+//		pexFee1.Add(pexFee1, big.NewInt(int64(1)))
 //		order2 := test.CreateOrder(
-//			lrc,
+//			pex,
 //			eth,
 //			account2.Address,
 //			amountS2,
 //			amountB2,
-//			lrcFee1,
-//			//lrcFee2,
+//			pexFee1,
+//			//pexFee2,
 //		)
 //		order2.Price = new(big.Rat).SetFrac(order2.AmountS, order2.AmountB)
 //		//bs2, _ := order2.MarshalJSON()
