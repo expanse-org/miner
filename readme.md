@@ -6,3 +6,5 @@ Miner is responsible for discovering and selecting the loop with the highest ret
 
 ### Documentations
 For more information regarding this project, please checkout its [github pages](https://loopring.github.io/miner).
+
+### Use `latest` branch
