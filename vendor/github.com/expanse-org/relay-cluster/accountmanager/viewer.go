@@ -20,6 +20,7 @@ package accountmanager
 
 import (
 	"errors"
+		"fmt"
 	rcache "github.com/expanse-org/relay-lib/cache"
 	"github.com/expanse-org/relay-lib/eth/loopringaccessor"
 	"github.com/expanse-org/relay-lib/log"
@@ -28,7 +29,6 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"math/big"
 )
-
 var accManager *AccountManager
 
 func IsInit() bool {
@@ -107,7 +107,7 @@ func GetBalanceAndAllowance(owner, token, spender common.Address) (balance, allo
 		log.Errorf("err:%s", err.Error())
 	}
 	allowance = accountAllowances.Allowances[token][spender].Allowance.BigInt()
-
+	fmt.Println("---------------------------Viewer ------------------------", balance, allowance)
 	return
 }
 

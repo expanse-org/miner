@@ -158,7 +158,7 @@ func (matcher *TimingMatcher) Stop() {
 }
 
 func (matcher *TimingMatcher) GetAccountAvailableAmount(address, tokenAddress, spender common.Address) (*big.Rat, error) {
-	//log.Debugf("address: %s , token: %s , spender: %s", address.Hex(), tokenAddress.Hex(), spender.Hex())
+	log.Debugf("address: %s , token: %s , spender: %s", address.Hex(), tokenAddress.Hex(), spender.Hex())
 	if balance, allowance, err := datasource.GetBalanceAndAllowance(address, tokenAddress, spender); nil != err {
 		return nil, err
 	} else {

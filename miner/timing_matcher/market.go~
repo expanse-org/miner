@@ -31,7 +31,6 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"math/big"
 	"sort"
-	"time"
 	"strings"
 )
 import "github.com/davecgh/go-spew/spew"
@@ -78,30 +77,24 @@ func (orders *OrdersState) prepareOrders(delegateAddress common.Address, market 
 	log.Debugf("prepareOrders, tokenS:%s, tokenB:%s", tokenS.Hex(), tokenB.Hex())
 	currentRoundNumber := market.matcher.lastRoundNumber.Int64()
 	deleyedNumber := market.matcher.delayedNumber + currentRoundNumber
-//	fmt.Println("+++++++++++++++++++++++++++",delegateAddress.Hex(), tokenS.Hex(), tokenB.Hex(), market.matcher.roundOrderCount, market.matcher.reservedTime, int64(0), currentRoundNumber, &types.OrderDelayList{OrderHash: orders.OrderHashesExcludeNextRound, DelayedCount: deleyedNumber})
 
 	orders1 := datasource.MinerOrders(delegateAddress, tokenS, tokenB, market.matcher.roundOrderCount, market.matcher.reservedTime, int64(0), currentRoundNumber, &types.OrderDelayList{OrderHash: orders.OrderHashesExcludeNextRound, DelayedCount: deleyedNumber})
 
-//	spew.Dump("--------------------------order length",orders1)
 	if len(orders1) < market.matcher.roundOrderCount {
 		orderCount := market.matcher.roundOrderCount - len(orders1)
 		orders2 := datasource.MinerOrders(delegateAddress, tokenS, tokenB, orderCount, market.matcher.reservedTime, currentRoundNumber+1, currentRoundNumber+market.matcher.delayedNumber)
-//		fmt.Println("*****************************",delegateAddress.Hex(), tokenS.Hex(), tokenB.Hex(), orderCount, market.matcher.reservedTime, currentRoundNumber+1, currentRoundNumber+market.matcher.delayedNumber)
 		orders1 = append(orders1, orders2...)
 	}
 
 	for _, order := range orders1 {
 		market.reduceRemainedAmountBeforeMatch(order)
 		if !market.isOrderFinished(order) {
-			fmt.Println("Order added")
 			orders.Orders[order.RawOrder.Hash] = order
 		} else {
-			fmt.Println("Order excluded")
 			orders.OrderHashesExcludeNextRound.AddHash(order.RawOrder.Hash)
 		}
 		log.Debugf("order status in this new round:%s, orderhash:%s, DealtAmountS:%s, ", market.matcher.lastRoundNumber.String(), order.RawOrder.Hash.Hex(), order.DealtAmountS.String())
 	}
-//	spew.Dump("--------------------------order length",orders)
 }
 
 func (orders *OrdersState) applyExcludeHash(matchedOrderHashes map[common.Hash]bool, roundOrderCount int) {
@@ -116,23 +109,25 @@ func (orders *OrdersState) applyExcludeHash(matchedOrderHashes map[common.Hash]b
 }
 
 func (market *Market) match() {
-//	fmt.Println("Market Dumping on the way ----------------------------------")
+	fmt.Println("Market Dumping on the way ----------------------------------")
+	dump := market.getOrdersForMatching(market.protocolImpl.DelegateAddress)
+	spew.Dump(dump)
 	market.getOrdersForMatching(market.protocolImpl.DelegateAddress)
 	matchedOrderHashes := make(map[common.Hash]bool) //true:fullfilled, false:partfilled
 	candidateRingList := CandidateRingList{}
 	//step 1: evaluate received
-//	spew.Dump("Outer Loop----------------------------------------market.AtoBOrders.Orders-----------------------------------Outer Loop",market.AtoBOrders.Orders)
-//	spew.Dump("Outer Loop----------------------------------------market.BtoAOrders.Orders-----------------------------------Outer Loop",market.BtoAOrders.Orders)
 	for _, a2BOrder := range market.AtoBOrders.Orders {
-		fmt.Println("---------------------------------------------1--------------------------------")
+		fmt.Println("1--------------------------------")
 		if failedCount, err1 := OrderExecuteFailedCount(a2BOrder.RawOrder.Hash); nil == err1 && failedCount > market.matcher.maxFailedCount {
 		 fmt.Println("2")
 		log.Debugf("orderhash:%s has been failed to submit %d times", a2BOrder.RawOrder.Hash.Hex(), failedCount)
 			continue
 		}
 		fmt.Println("SPEW comming")
-		 spew.Dump("Inner Loop---------------------------------------------------AtoBOrders----------------------------------------------------Inner Loop",market.AtoBOrders.Orders)
-		spew.Dump("Inner Loop----------------------------------------------------BtoAOrders----------------------------------------------------Inner Loop",market.BtoAOrders.Orders)
+
+		 spew.Dump(market.AtoBOrders.Orders)
+		fmt.Println("BtoAOrders -----------------------------------------------------------")
+		spew.Dump(market.BtoAOrders.Orders)
 		for _, b2AOrder := range market.BtoAOrders.Orders {
 		 fmt.Println("3")
 		if failedCount, err1 := OrderExecuteFailedCount(b2AOrder.RawOrder.Hash); nil == err1 && failedCount > market.matcher.maxFailedCount {
@@ -309,18 +304,17 @@ get orders from ordermanager
 func (market *Market) getOrdersForMatching(delegateAddress common.Address) {
 	market.AtoBOrders.Orders = make(map[common.Hash]*types.OrderState)
 	market.BtoAOrders.Orders = make(map[common.Hash]*types.OrderState)
-//	fmt.Println("------------------------------------------------Addresses------------------------",delegateAddress.Hex(), market, market.TokenA.Hex(), market.TokenB.Hex())
-	market.BtoAOrders.prepareOrders(delegateAddress, market, market.TokenB, market.TokenA)
+
 	market.AtoBOrders.prepareOrders(delegateAddress, market, market.TokenA, market.TokenB)
-//	market.BtoAOrders.prepareOrders(delegateAddress, market, market.TokenB, market.TokenA)
-	time.Sleep(1* time.Second)
-	log.Debugf("#### %s,%s %d,%d %d",market.TokenA.Hex(),market.TokenB.Hex(), len(market.AtoBOrders.Orders), len(market.BtoAOrders.Orders),market.matcher.roundOrderCount)
+	market.BtoAOrders.prepareOrders(delegateAddress, market, market.TokenB, market.TokenA)
+
+	////log.Debugf("#### %s,%s %d,%d %d",market.TokenA.Hex(),market.TokenB.Hex(), len(atoBOrders), len(btoAOrders),market.matcher.roundOrderCount)
 }
 
 //sub the matched amount in new round.
 func (market *Market) reduceRemainedAmountBeforeMatch(orderState *types.OrderState) {
 	orderHash := orderState.RawOrder.Hash
-	spew.Dump("****************************", orderHash)
+
 	if amountS, amountB, err := DealtAmount(orderHash); nil != err {
 		log.Errorf("err:%s", err.Error())
 	} else {

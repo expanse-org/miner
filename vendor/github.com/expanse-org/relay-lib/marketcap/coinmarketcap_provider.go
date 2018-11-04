@@ -1,3 +1,4 @@
+
 /*
 
   Copyright 2017 Loopring Project Ltd (Loopring Foundation).
@@ -494,10 +495,14 @@ func NewMarketCapProvider(options *MarketCapOptions) *CapProvider_CoinMarketCap 
 func (p *CapProvider_CoinMarketCap) IsOrderValueDust(state *types.OrderState) bool {
 	remainedAmountS, _ := state.RemainedAmount()
 	remainedValue, _ := p.LegalCurrencyValue(state.RawOrder.TokenS, remainedAmountS)
+	a , _ := remainedAmountS.Float64()
+	b , _ := remainedAmountS.Float64()
+	fmt.Println(a,b)
+//	fmt.Println("-----++++++++++++----",remainedAmountS.4(), remainedValue.Float64(), p.IsValueDusted(remainedValue))
 
 	return p.IsValueDusted(remainedValue)
 }
 
 func (p *CapProvider_CoinMarketCap) IsValueDusted(value *big.Rat) bool {
-	return p.dustValue.Cmp(value) > 0
+	return p.dustValue.Cmp(value) > 1000
 }

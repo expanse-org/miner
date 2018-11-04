@@ -20,6 +20,7 @@ package datasource
 
 import (
 	"errors"
+	"fmt"
 	"github.com/expanse-org/miner/config"
 	"github.com/expanse-org/motan-go"
 	"github.com/expanse-org/relay-cluster/accountmanager"
@@ -35,12 +36,14 @@ import (
 	"math/big"
 	"strings"
 )
-
+//import "github.com/davecgh/go-spew/spew"
 type localDataSource struct {
 	orderView ordermanager.OrderViewer
 }
 
 func (source *localDataSource) GetBalanceAndAllowance(owner, token, spender common.Address) (balance, allowance *big.Int, err error) {
+	balance1, allowance2, _ :=  accountmanager.GetBalanceAndAllowance(owner, token, spender)
+	fmt.Println("-------------------------------------Datasource -----------------------------------",balance1, allowance2)
 	return accountmanager.GetBalanceAndAllowance(owner, token, spender)
 }
 
@@ -69,6 +72,7 @@ func (source *motanDataSource) GetBalanceAndAllowance(owner, token, spender comm
 		}
 		return nil, nil, err
 	} else {
+		fmt.Println("----------------------------motan function-----------------------------------", res.Balance, res.Allowance)
 		return res.Balance, res.Allowance, nil
 	}
 }
@@ -85,12 +89,14 @@ func (source *motanDataSource) MinerOrders(protocol, tokenS, tokenB common.Addre
 		EndBlockNumber:       endBlockNumber,
 		FilterOrderHashLists: filterOrderHashLists,
 	}
+//	spew.Dump("+++++++++++++++++++++++++",req)
 	res := &libmotan.MinerOrdersRes{}
 	if err := source.motanClient.Call("getMinerOrders", []interface{}{req}, res); nil != err {
 		log.Errorf("err:%s", err.Error())
 	} else {
 		orders = res.List
 	}
+//	spew.Dump("********************", orders)
 	return orders
 }
 
